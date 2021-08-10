@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/cuentas",
+      "handler": "cuenta.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cuentas/count",
+      "handler": "cuenta.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cuentas/:id",
+      "handler": "cuenta.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/cuentas",
+      "handler": "cuenta.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/cuentas/:id",
+      "handler": "cuenta.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/cuentas/:id",
+      "handler": "cuenta.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
