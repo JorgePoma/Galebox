@@ -9,7 +9,7 @@ import { PostService } from "./post.service";
 export class HomePage {
 
   posts:any =[]
-
+  
   constructor(
     private postService: PostService
   ) { }

@@ -1,36 +1,93 @@
-<ion-header [translucent]="true">
+
+<ion-header [translucent]="false">
   <ion-toolbar>
   <ion-item>
-    <ion-title class="titulo">
-      Galebox
-    </ion-title>
-    <ion-avatar slot="end">
-      <ion-icon name="person-circle-outline" style="width: 6vh; height: 6vh;"></ion-icon>
-    </ion-avatar>
+
+    <div class="ion-page" id="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Galebox</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-button expand="block" onclick="Menu()">Open Menu</ion-button>
+      </ion-content>
+    </div>
+
+    <script>
+      async function Menu() {
+          await menuController.toggle();
+      }
+    </script>
   </ion-item>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row>
-      <ion-col *ngFor="let post of posts" size="12" size-md="3">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{post.titulo}}</ion-card-title>
-          </ion-card-header>
-          <img [src]=" 'http://localhost:1337' + post.imagen.formats.small.url">
-      
-          <ion-card-content>
-            {{post.descripcion}}
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="warning">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-</ion-content>
+<body>
+  <ion-app>
+    <ion-menu side="start" content-id="main-content">
+      <ion-header>
+        <ion-toolbar translucent>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item button="true" routerLink="">
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-label>Cuenta</ion-label>
+          </ion-item>
+          <ion-item button="true">
+            <ion-icon name="navigate" slot="start"></ion-icon>
+            <ion-label>Publicar</ion-label>
+          </ion-item>
+          <ion-item button="true">
+            <ion-icon name="bookmarks" slot="start"></ion-icon>
+            <ion-label>Guardados</ion-label>
+          </ion-item>
+          <ion-item button="true">
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label style="font-weight: bold;">Cerrar Sesión</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let post of posts" size="12" size-md="4">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{post.titulo}}</ion-card-title>
+              </ion-card-header>
+              <img [src]=" 'http://localhost:1337' + post.imagen.formats.small.url" style="cursor: pointer;">
+          
+              <ion-card-content>
+                {{post.descripcion}}
+                <div style="text-align: end; cursor: pointer;">
+                  <ion-icon class="fa fa-star" name="star" id="1e" ></ion-icon>
+                  <ion-icon class="fa fa-star" name="star" id="2e" ></ion-icon>
+                  <ion-icon class="fa fa-star" name="star" id="3e" ></ion-icon>
+                  <ion-icon class="fa fa-star" name="star" id="4e" ></ion-icon>
+                  <ion-icon class="fa fa-star" name="star" id="5e" ></ion-icon>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="warning">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-content>
+  </ion-app>
+    
+
+</body>
+
+
