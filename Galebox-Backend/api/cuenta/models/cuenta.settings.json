@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "nickname": {
+    "username": {
       "type": "string"
     },
     "email": {
@@ -32,6 +32,10 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "users_permissions_role": {
+      "plugin": "users-permissions",
+      "model": "role"
     }
   }
 }

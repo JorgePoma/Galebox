@@ -26,3 +26,23 @@
   text-decoration: none;
 }
 
+.guardar{
+  font-size: 4vh;
+  cursor: pointer;
+}
+.nstar{
+  font-size: 3vh;
+  color: gray;
+  margin-left: 3px;
+  margin-bottom: 2px;
+}
+.star{
+  font-size: 4vh;
+  color: rgb(197, 208, 0);
+  margin-left: 3px;
+}
+.stars{
+  margin-top: 2vh;
+  text-align: end; 
+  cursor: pointer;
+}

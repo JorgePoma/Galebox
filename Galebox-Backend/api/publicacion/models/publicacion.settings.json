@@ -19,16 +19,36 @@
       "type": "text"
     },
     "imagen": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false,
-      "pluginOptions": {}
+      "default": "https://impomarejo.com/uploads/sin_imagen.png",
+      "type": "string"
+    },
+    "categoria": {
+      "default": "",
+      "type": "enumeration",
+      "enum": [
+        "",
+        "deporte",
+        "salud",
+        "entretenimiento",
+        "comida",
+        "viaje",
+        "comedia",
+        "educación",
+        "NSFW",
+        "hogar",
+        "vacaciones",
+        "naturaleza",
+        "videojuegos"
+      ]
+    },
+    "estrellas": {
+      "default": 0,
+      "type": "number"
+    },
+    "user": {
+      "via": "publications",
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from "../services/account.service";
 
 @Component({
   selector: 'app-account',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private accountService:AccountService
+  ) { }
 
   ngOnInit() {
-  }
 
+  }
+  getCurrentAccount(){
+    try {
+      this.accountService.verifyLogin()
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
 }

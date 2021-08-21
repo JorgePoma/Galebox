@@ -1,35 +1,51 @@
 <ion-content  class="background">
-  <ion-grid class="centrar">
-    <ion-card>
-      <ion-card-header>
-        <br>
-        <ion-card-title class="titulo">Galebox</ion-card-title>
-        <ion-card-subtitle style="text-align: center;">Registrarse</ion-card-subtitle>
-      </ion-card-header>
-  
-      <ion-card-content class="carta">
-        <ion-item>
-          <ion-label position="floating" color="medium">Nombre de usuario:</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating" color="medium">Correo:</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating"color="medium" >Contraseña:</ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed"color="medium" >Foto:</ion-label>
-          
-        </ion-item>
-        <ion-input type="file"></ion-input>
-        <br>
-        <div style="text-align: center;">
-          <Ion-Button color="warning">Ingresar</Ion-Button>
+  <ion-grid class="">
+    <ion-row>
+      <ion-col size ="1">
+        <div>
+          <ion-icon name="arrow-back" slot="end" class="titulo" routerLink="/home"></ion-icon>
         </div>
-      </ion-card-content>
-  </ion-card>
+        
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="1" size-md="4"></ion-col>
+      <ion-col size="10" size-md="4">
+        <ion-card style="margin-top: 4vh;">
+          <ion-card-header>
+            <br>
+            <ion-card-title class="titulo">Galebox</ion-card-title>
+            <ion-card-subtitle style="text-align: center;">Registrarse</ion-card-subtitle>
+          </ion-card-header>
+      
+          <ion-card-content class="carta">
+            <ion-item>
+              <ion-label position="floating" color="medium">Nombre de usuario:</ion-label>
+              <ion-input #username></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating" color="medium">Correo:</ion-label>
+              <ion-input #email></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating"color="medium" >Contraseña:</ion-label>
+              <ion-input type="password" #password></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="fixed"color="medium" >Foto:</ion-label>
+              
+            </ion-item>
+            <ion-input type="file" (change)="captureFile($event)" #foto></ion-input>
+            <div *ngIf="previsualizacion">
+              <img [src]="previsualizacion">
+            </div>
+            <br>
+            <div style="text-align: center;">
+              <ion-button color="warning" (click) ="guardarCuenta(username, email, password)">Registrarse</ion-button>
+            </div>
+          </ion-card-content>
+      </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

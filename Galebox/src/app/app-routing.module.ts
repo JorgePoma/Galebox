@@ -14,7 +14,8 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
@@ -26,7 +27,14 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
   },
-
+  {
+    path: 'saved',
+    loadChildren: () => import('./saved/saved.module').then( m => m.SavedPageModule)
+  },
+  {
+    path: 'post/edit/:postid',
+    loadChildren:() => import('./post-form/post-form.module').then(m => m.PostFormPageModule)
+  }
 ];
 
 @NgModule({
