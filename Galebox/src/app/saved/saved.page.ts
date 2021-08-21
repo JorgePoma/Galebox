@@ -17,16 +17,19 @@ export class SavedPage implements OnInit {
     private alertControler: AlertController
   ) { }
 
-  loadPost(){
-    this.postService.getPosts().subscribe(
+  loadMyPost(){
+    const user = JSON.parse(localStorage.getItem('token'))
+    console.log(user.user.id)
+    this.postService.getMyPost(user.user.id).subscribe(
       (res) => {
         this.posts = res
       }, 
       (err) => console.log(err)
       );
+      
   }
   ionViewWillEnter(){
-    this.loadPost();
+    this.loadMyPost();
   }
 
   ngOnInit() {
@@ -43,7 +46,7 @@ export class SavedPage implements OnInit {
           console.log(id);
           this.postService.removePostById(id).subscribe(
           (res) => {
-            this.loadPost();
+            this.loadMyPost();
           },
           (err) => console.log(err)
           );
@@ -54,9 +57,4 @@ export class SavedPage implements OnInit {
     });
     await alert.present();
   }
-
-  updatePost(id){
-    
-  }
-
 }

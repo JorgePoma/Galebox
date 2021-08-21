@@ -93,6 +93,7 @@ export class HomePage {
       this.postService.updatePost(id,this.p).subscribe(
         (res) => {
           console.log(res)
+          this.loadPost();
         },
         (err) => console.log(err)
       );

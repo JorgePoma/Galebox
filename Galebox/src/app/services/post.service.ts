@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { User } from './account.service';
 
 export interface Post {
   "titulo": "string",
@@ -32,11 +33,17 @@ export class PostService {
     return this.http.get('http://localhost:1337/publicacions/'+id)
   }
 
-  createPost(titulo: string, descripcion:string, imagen:string , categoria:string ) {
+  getMyPost(user){
+    return this.http.get('http://localhost:1337/publicacions?user='+user)
+  }
+
+  createPost(titulo: string, descripcion:string, imagen:string , categoria:string, user:User ) {
     return this.http.post(this.API,{
-      titulo, descripcion,imagen, categoria
+      titulo, descripcion,imagen, categoria, user
     })
   }
+
+  
 
   removePostById(id: string) {
     return this.http.delete('http://localhost:1337/publicacions/'+id)

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from "../services/account.service";
-import { Router } from '@angular/router';
-import { AppComponent } from '../app.component';
+import { Router, RouterLink } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,10 +18,19 @@ export class LoginPage implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Datos Incorrectos',
+      duration: 2000
+    });
+    toast.present();
   }
 
   login(username, password){
@@ -34,8 +43,8 @@ export class LoginPage implements OnInit {
           console.log(JSON.parse(localStorage.getItem('token')));
           this.router.navigate(['/home'])
         },
-          (err) => console.log(err)
-        
+          (err) => {console.log(err);
+          this.presentToast();}
         );
       }else{
         console.log('ya estas logueado')

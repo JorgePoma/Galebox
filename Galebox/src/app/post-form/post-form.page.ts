@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PostService } from "../services/post.service";
 import { UploadService } from "../services/upload.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-post-form',
@@ -26,9 +27,16 @@ export class PostFormPage implements OnInit {
     "user": ""
 }
 
+  u:any = { 
+    "publications": [
+      "string"
+    ]
+  }
+
   constructor(
     private sanitizer: DomSanitizer, 
-    private postServices: PostService, 
+    private postServices: PostService,
+    private accountService:AccountService, 
     private router: Router,
     private activateRoute:ActivatedRoute,
     private uploadService:UploadService) { }
@@ -91,7 +99,8 @@ export class PostFormPage implements OnInit {
         (res) => {
           if(res){
             console.log(res);
-            this.postServices.createPost(titulo.value, descripcion.value,res.secure_url, categoria.value).subscribe(
+            const user = JSON.parse(localStorage.getItem('token'))
+            this.postServices.createPost(titulo.value, descripcion.value,res.secure_url, categoria.value,user.user).subscribe(
               (res) => {
                 this.loading=false;
                 console.log(res);
@@ -127,4 +136,3 @@ export class PostFormPage implements OnInit {
     );
     }
   }
-
