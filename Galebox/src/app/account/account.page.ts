@@ -1,44 +1,49 @@
+import { unsupported } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from "../services/account.service";
 import { PostService } from '../services/post.service';
+import { UploadService } from '../services/upload.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
+  providers: [ UploadService ]
 })
 export class AccountPage implements OnInit {
   editing = false;
   public previsualizacion: string;
   public archivos:any = []
   public loading:boolean;
+  
   u:any = {
     "jwt": "string",
     "user": {}
   }
   user:any = { 
-    "username": "string",
-    "email": "string",
+    "username": "",
+    "email": "",
     "publications": [
-      "string"
+      ""
     ],
-    "imagen": "https://www.ver.bo/wp-content/uploads/2019/01/4b463f287cd814216b7e7b2e52e82687.png_1805022883.png",
+    "imagen": "",
   }
 
   constructor(
     private accountService:AccountService,
     private sanitizer: DomSanitizer, 
     private postServices: PostService, 
-    private activateRoute:ActivatedRoute
+    private activateRoute:ActivatedRoute,
+    private uploadService:UploadService
   ) { }
 
   ngOnInit() {
     this.activateRoute.paramMap.subscribe((paramMap) => {
-      if (paramMap.get('postid')) {
+      if (paramMap.get('accountid')) {
         this.editing = true;
-        this.accountService.getAccountById(paramMap.get('postid')).subscribe(
+        this.accountService.getAccountById(paramMap.get('accountid')).subscribe(
           (res) => {
           this.user = res;
           });
@@ -85,22 +90,46 @@ export class AccountPage implements OnInit {
     console.log(this.u)
   }
 
-  updateAccount(id, username, email, imagen){
-    this.postServices.getPostById(id).subscribe(
-      (res) => {
-        this.user = res
-    
-        this.user.username = username,
-        this.user.email = email ,
-        this.user.imagen = imagen
-        this.accountService.updateAccount(id,this.user).subscribe(
+  updateAccount(id, username, email){
+    this.loading = true;
+    const file_data = this.archivos[0];
+    let img_url = "";
+      const data = new FormData();
+      data.append('file', file_data);
+      data.append('upload_preset', 'galebox');
+      data.append('cloud_name', 'cuarteto-dinamico')
+      this.uploadService.uploadImage(data).subscribe(
         (res) => {
-          console.log(res)
+          if(res){
+            console.log(res);
+            img_url = res.secure_url;
+            this.accountService.getAccountById(id).subscribe(
+              (res) => {
+                this.user = res
+                if(username.value != ""){
+                  this.user.username = username.value;
+                }
+                if(email.value != ""){
+                  this.user.email = email.value;
+                }
+                if(img_url != this.user.imagen){
+                  this.user.imagen = img_url;
+                }
+                this.accountService.updateAccount(id,this.user).subscribe(
+                (res) => {
+                  console.log(res);
+                  this.loading=false;
+                },
+                (err) => {console.log('err1',err)
+                this.loading=false;}
+              );
+            },
+            (err) => {console.log('err2',err)
+            this.loading=false;}
+            );
+          }
         },
-        (err) => console.log(err)
-      );
-    },
-    (err) => console.log(err)
-    );
-  }
-}
+        (err)=>console.log('err3',err)
+        )
+      }
+    }

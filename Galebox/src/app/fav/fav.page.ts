@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { HomePage } from '../home/home.page';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -71,24 +70,23 @@ export class FavPage implements OnInit {
     this.isSave = false;
     this.noSave = true;
     const usu = JSON.parse(localStorage.getItem('token'));
-    this.usuario = usu;
-    this.user = this.usuario.user;
+    this.user = usu.user;
+    console.log(this.user)
     const aux = [];
     for (let x = 0; x < this.guardados.length; x++) {
       const post = this.guardados[x];
       if (post.id != id) {
         aux.push(this.guardados[x]);
       }
-      this.guardados = aux;
-      this.user.guardados = this.guardados;
     }
+    this.user.guardados = aux;
     this.accountService.updateAccount(this.user.id, this.user).subscribe(
       (res) => {
-        console.log(res)
+        console.log('err1',res)
         this.deleteToast();
       },
       (err)=> {
-        console.log(err)
+        console.log('err2',err)
       }
     );
   }

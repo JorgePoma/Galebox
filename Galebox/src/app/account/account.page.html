@@ -57,7 +57,7 @@
       
     </ion-row>
   </ion-grid>
-
+<!-- 
   <ion-grid>
     <ion-row>
       <ion-col size="0" size-md="4">
@@ -90,7 +90,7 @@
                       <img src="{{u.imagen}}">
                     </div>
                   </ion-item>
-                  <ion-button color= "warning" style="margin-top: 3vh;">Guardar</ion-button>
+                  <ion-button color= "warning" style="margin-top: 3vh;" [disabled]="loading" (click) = "updateAccount(u.id, username, email, imagen)">{{(loading) ? 'Cargando...' : 'Guardar' }}</ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -100,6 +100,9 @@
       
     </ion-row>
   </ion-grid>
+-->
+  
+
 </ion-content>
 
 

@@ -110,27 +110,57 @@ export class PostFormPage implements OnInit {
         },
         (err) =>{
           console.log('error2',err);
+          this.loading=false;
         }
       )
   }
   updatePost(id, titulo, descripcion, imagen, categoria){
-    this.postServices.getPostById(id).subscribe(
-      (res) => {
-        this.p = res
-        console.log(this.p.estrellas)
-    
-        this.p.titulo = titulo,
-        this.p.descripcion = descripcion ,
-        this.p.imagen = imagen, 
-        this.p.categoria = categoria
-        this.postServices.updatePost(id,this.p).subscribe(
+    this.loading = true;
+    const file_data = this.archivos[0];
+    let img_url = "";
+      const data = new FormData();
+      data.append('file', file_data);
+      data.append('upload_preset', 'galebox');
+      data.append('cloud_name', 'cuarteto-dinamico')
+      this.uploadService.uploadImage(data).subscribe(
         (res) => {
-          console.log(res)
-        },
-        (err) => console.log(err)
-      );
-    },
-    (err) => console.log(err)
-    );
+          if(res){
+            console.log(res);
+            img_url = res.secure_url;
+            this.postServices.getPostById(id).subscribe(
+              (res) => {
+                this.p = res
+                console.log(titulo.value)
+                
+                if (titulo.value != "") {
+                  this.p.titulo = titulo.value;
+                }
+                if(descripcion.value != ""){
+                  this.p.descripcion = descripcion.value;
+                }
+                if (imagen.value != "") {
+                  this.p.imagen = img_url; 
+                }
+                if (categoria.value != "") {
+                  this.p.categoria = categoria.value;
+                }
+                console.log(this.p)
+                this.postServices.updatePost(id,this.p).subscribe(
+                (res) => {
+                  console.log(res);
+                  this.loading=false;
+                  this.router.navigate(['/home']);
+                },
+                (err) => {console.log(err)
+                  this.loading=false;}
+                
+              );
+            },
+            (err) => {console.log(err)
+              this.loading=false;}
+            );
+        }
+      });
+    
     }
   }

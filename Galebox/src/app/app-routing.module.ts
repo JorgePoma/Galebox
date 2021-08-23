@@ -34,7 +34,8 @@ const routes: Routes = [
   {
     path: 'post/edit/:postid',
     loadChildren:() => import('./post-form/post-form.module').then(m => m.PostFormPageModule)
-  },  {
+  },
+  {
     path: 'fav',
     loadChildren: () => import('./fav/fav.module').then( m => m.FavPageModule)
   }

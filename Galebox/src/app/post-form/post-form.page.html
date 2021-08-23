@@ -55,7 +55,7 @@
               <ion-label position="floating" color="medium" >Añadir descripción:</ion-label>
               <ion-input #descripcion></ion-input>
             </ion-item>
-            <ion-button color= "warning" style="margin-top: 4vh;" [disabled]="loading" (click) = "editing ? updatePost(titulo, descripcion, imagen, categoria) : guardarPost(titulo, descripcion, categoria)">{{(loading) ? 'Cargando...' : 'Guardar' }}</ion-button>
+            <ion-button color= "warning" style="margin-top: 4vh;" [disabled]="loading" (click) = "editing ? updatePost(p.id, titulo, descripcion, imagen, categoria) : guardarPost(titulo, descripcion, categoria)">{{(loading) ? 'Cargando...' : 'Guardar' }}</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
