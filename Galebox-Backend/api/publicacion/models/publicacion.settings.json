@@ -49,6 +49,11 @@
       "via": "publications",
       "plugin": "users-permissions",
       "model": "user"
+    },
+    "users": {
+      "via": "guardado",
+      "plugin": "users-permissions",
+      "collection": "user"
     }
   }
 }

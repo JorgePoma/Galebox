@@ -59,19 +59,19 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "imagen": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
-      "plugin": "upload",
-      "required": false,
-      "pluginOptions": {}
-    },
     "publications": {
       "collection": "publicacion",
       "via": "user"
+    },
+    "imagen": {
+      "type": "text",
+      "default": "https://www.ver.bo/wp-content/uploads/2019/01/4b463f287cd814216b7e7b2e52e82687.png_1805022883.png"
+    },
+    "guardado": {
+      "columnName": "save",
+      "collection": "publicacion",
+      "via": "users",
+      "dominant": true
     }
   }
 }

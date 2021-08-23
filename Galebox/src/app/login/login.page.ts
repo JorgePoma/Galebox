@@ -40,8 +40,9 @@ export class LoginPage implements OnInit {
           
           this.usuario = res;
           this.usuario = localStorage.setItem('token',JSON.stringify(res));
+          //this.router.navigate(['/home'])
+          window.location.assign('http://localhost:8100/home');
           console.log(JSON.parse(localStorage.getItem('token')));
-          this.router.navigate(['/home'])
         },
           (err) => {console.log(err);
           this.presentToast();}

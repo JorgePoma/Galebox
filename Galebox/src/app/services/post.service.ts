@@ -9,6 +9,9 @@ export interface Post {
   "categoria": "",
   "estrellas": 0,
   "user": "string",
+  "users": [
+    "string"
+  ],
   "published_at": "string",
   "created_by": "string",
   "updated_by": "string"

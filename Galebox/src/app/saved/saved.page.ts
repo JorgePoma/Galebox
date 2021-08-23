@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from "../services/post.service";
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -14,15 +14,31 @@ export class SavedPage implements OnInit {
 
   constructor(
     private postService: PostService,
-    private alertControler: AlertController
+    private alertControler: AlertController,
+    public toastController: ToastController
   ) { }
 
+  ngOnInit() {
+    
+  }
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Aun no has publicado nada',
+      duration: 2000
+    });
+    toast.present();
+  }
+
   loadMyPost(){
+    
     const user = JSON.parse(localStorage.getItem('token'))
     console.log(user.user.id)
     this.postService.getMyPost(user.user.id).subscribe(
       (res) => {
         this.posts = res
+        if(this.posts.length == 0){
+          this.presentToast();
+        }
       }, 
       (err) => console.log(err)
       );
@@ -32,8 +48,7 @@ export class SavedPage implements OnInit {
     this.loadMyPost();
   }
 
-  ngOnInit() {
-  }
+  
 
   async deletePost(id) {
     const alert = await this.alertControler.create({

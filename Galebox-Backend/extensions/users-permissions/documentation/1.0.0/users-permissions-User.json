@@ -1251,73 +1251,6 @@
               }
             }
           },
-          "imagen": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "publications": {
             "type": "array",
             "items": {
@@ -1360,6 +1293,77 @@
                 },
                 "user": {
                   "type": "string"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "imagen": {
+            "type": "string",
+            "default": "https://www.ver.bo/wp-content/uploads/2019/01/4b463f287cd814216b7e7b2e52e82687.png_1805022883.png"
+          },
+          "guardado": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "titulo": {
+                  "type": "string"
+                },
+                "descripcion": {
+                  "type": "string"
+                },
+                "imagen": {
+                  "type": "string"
+                },
+                "categoria": {
+                  "type": "string",
+                  "enum": [
+                    "",
+                    "deporte",
+                    "salud",
+                    "entretenimiento",
+                    "comida",
+                    "viaje",
+                    "comedia",
+                    "educación",
+                    "NSFW",
+                    "hogar",
+                    "vacaciones",
+                    "naturaleza",
+                    "videojuegos"
+                  ]
+                },
+                "estrellas": {
+                  "type": "number"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "published_at": {
                   "type": "string"
@@ -1415,6 +1419,16 @@
             "type": "string"
           },
           "publications": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "imagen": {
+            "type": "string",
+            "default": "https://www.ver.bo/wp-content/uploads/2019/01/4b463f287cd814216b7e7b2e52e82687.png_1805022883.png"
+          },
+          "guardado": {
             "type": "array",
             "items": {
               "type": "string"

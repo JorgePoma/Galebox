@@ -12,13 +12,18 @@
       </ion-col>
       <ion-col size="12" size-md="4" style="text-align: center; align-items: center;">
         <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Ficha de datos
+            </ion-card-title>
+          </ion-card-header>
           <ion-card-content>
             <ion-grid>
               <ion-row style=" margin: 10vh;">
                 <ion-col size="12" size-md="12" style="position: relative;">
-                    <ion-avatar style=" position: absolute; top: 50%; left: 50%; margin: -25px 0 0 -25px; cursor: pointer;" >
+                    <ion-avatar style=" position: absolute; top: 50%; left: 50%; margin: -25px 0 0 -25px; cursor: pointer;" class="avatar" >
                       
-                        <img src="https://www.ver.bo/wp-content/uploads/2019/01/4b463f287cd814216b7e7b2e52e82687.png_1805022883.png">
+                        <img src="{{u.imagen}}">
                       
                     </ion-avatar> 
                 </ion-col>
@@ -29,13 +34,13 @@
                     <ion-label  color="medium">Nombre de usuario:</ion-label>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-label  >Jorge</ion-label>
+                    <ion-label  >{{u.username}}</ion-label>
                   </ion-item>
                   <ion-item lines="none">
                     <ion-label color="medium">Correo:</ion-label>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-label  >Jorge@gmail.com</ion-label>
+                    <ion-label  >{{u.email}}</ion-label>
                   </ion-item>
                   <ion-item lines="none">
                     <ion-label color="medium" >Contraseña:</ion-label>
@@ -68,19 +73,22 @@
                 <ion-col size="12" size-md="12">
                   <ion-item lines="none">
                     <ion-label position="floating" color="medium">Nuevo nombre de usuario:</ion-label>
-                    <ion-input></ion-input>
+                    <ion-input #username></ion-input>
                   </ion-item>
                   <ion-item lines="none">
                     <ion-label position="floating" color="medium">Nuevo correo:</ion-label>
-                    <ion-input></ion-input>
+                    <ion-input #email></ion-input>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-label position="floating" color="medium" >Nueva contraseña:</ion-label>
-                    <ion-input></ion-input>
-                  </ion-item>
-                  <ion-item lines="none">
-                    <ion-label position="floating" color="medium" >Confirmar contraseña:</ion-label>
-                    <ion-input></ion-input>
+                    <ion-label position="floating" color="medium" >Añadir Imagen:</ion-label>
+                    <br/>
+                    <input (change)="captureFile($event)" type="file" #imagen>
+                    <div *ngIf="previsualizacion && !editing">
+                      <img [src]="previsualizacion">
+                    </div>
+                    <div *ngIf="editing">
+                      <img src="{{u.imagen}}">
+                    </div>
                   </ion-item>
                   <ion-button color= "warning" style="margin-top: 3vh;">Guardar</ion-button>
                 </ion-col>

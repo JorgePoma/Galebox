@@ -14,6 +14,10 @@ export interface User {
   "publications": [
     "string"
   ],
+  "imagen": "string",
+  "guardado": [
+    "string"
+  ],
   "created_by": "string",
   "updated_by": "string"
 }
@@ -38,14 +42,14 @@ export class AccountService {
     return this.http.get('http://localhost:1337/users/'+id)
   }
 
-  createAccount(username:string, email:string, password:string, role:string, imagen:FormData){
+  createAccount(username:string, email:string, password:string, role:string, imagen:string){
     return this.http.post('http://localhost:1337/auth/local/register',{
       username, email, password, role, imagen
     })
   }
 
   updateAccount(id:string, user:User){
-    return this.http.put('http://localhost:1337/publicacions/'+id,
+    return this.http.put('http://localhost:1337/users/'+id,
     user)
   }
 
@@ -63,6 +67,13 @@ export class AccountService {
 
   verifyLogin(){
     return this.http.get('http://localhost:1337/users/me')
+  }
+
+  isFav(post){
+    return this.http.get('http://localhost:1337/publicacions?users.guardado='+post)
+  }
+  getFav(){
+    return this.http.get('http://localhost:1337/publicacions?users.guardado.id_gte=0')
   }
 }
 

@@ -85,10 +85,7 @@ export class PostFormPage implements OnInit {
   })
   guardarPost(titulo, descripcion, categoria){
     console.log(titulo, descripcion, categoria)
-
     //save image
-    
- 
       this.loading = true;
       const file_data = this.archivos[0];
       const data = new FormData();
@@ -100,18 +97,19 @@ export class PostFormPage implements OnInit {
           if(res){
             console.log(res);
             const user = JSON.parse(localStorage.getItem('token'))
+            console.log(user.user);
             this.postServices.createPost(titulo.value, descripcion.value,res.secure_url, categoria.value,user.user).subscribe(
               (res) => {
                 this.loading=false;
                 console.log(res);
                 this.router.navigate(['/home'])
               }, 
-              (err) => console.error(err)
+              (err) => console.error('error1',err)
             );
           }
         },
         (err) =>{
-          console.log(err);
+          console.log('error2',err);
         }
       )
   }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { PostService } from "../services/post.service";
 import { AccountService } from "../services/account.service";
 import { Router } from '@angular/router';
+import { MenuController, ToastController } from '@ionic/angular';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +15,12 @@ export class HomePage {
 
   posts:any =[]
   accounts:any=[]
+  guardados:any=[]
   a = true
   isAuth :boolean;
   noAuth: boolean;
+  isfav :boolean;
+
   p:any = {
       "titulo": "",
       "descripcion": "",
@@ -24,15 +29,49 @@ export class HomePage {
       "estrellas": 0,
       "user": "",
   }
+  usuario:any = {
+    "jwt": "string",
+    "user": {
+      "id": "string",
+      "username": "string",
+      "email": "string",
+      "guardado":[]
+    }
+  }
+  user:any = {
+    "id": "string",
+    "username": "string",
+    "email": "string",
+    "guardado":[]
+  }
   
   constructor(
     private postService: PostService,
     private accountService: AccountService,
-    private router: Router
-
+    public toastController: ToastController,
+    private menu: MenuController
   ) { }
 
+  ngOnInit() {
+    this.usuario = localStorage.getItem('token');
+    //this.getAccountById(this.usuario.user.id);
+  }
+    
+  async openCustom() {
+    await this.menu.enable(true, 'custom');
+    await this.menu.open('custom');
+  }
+
+  async saveToast() {
+    const toast = await this.toastController.create({
+      message: 'Publicacion añadida a favoritos',
+      duration: 1000
+    });
+    toast.present();
+  }
+
   loadPost(){
+    
     this.postService.getPosts().subscribe(
       (res) => {
         this.posts = res;
@@ -51,9 +90,6 @@ export class HomePage {
       );
   }
 
-  ngOnInit() {
-  }
-
   ionViewWillEnter(){
     this.loadPost();
     this.isLogin();
@@ -66,6 +102,7 @@ export class HomePage {
   getAccountById(id){
     this.postService.getPostById(id).subscribe(
     (res) => {
+      this.usuario = res;
     },
     (err) => console.log(err)
     );
@@ -76,7 +113,8 @@ export class HomePage {
         (res) => {
           console.log('sesion cerrada correctamente',res )
           localStorage.clear();
-          this.router.navigate(['/home'])
+          //this.router.navigate(['/home'])
+          window.location.assign('http://localhost:8100/home');
         },
         (err) => {
           console.log(err)
@@ -88,11 +126,12 @@ export class HomePage {
     this.postService.getPostById(id).subscribe(
     (res) => {
       this.p = res
-      console.log(this.p.estrellas)
+      console.log(this.p)
+      //console.log(this.p.estrellas)
       this.p.estrellas = numero;
       this.postService.updatePost(id,this.p).subscribe(
         (res) => {
-          console.log(res)
+          
           this.loadPost();
         },
         (err) => console.log(err)
@@ -110,4 +149,31 @@ export class HomePage {
       this.noAuth = true; 
     }
   }
-}
+  
+
+  addFav(post){
+    const usu = JSON.parse(localStorage.getItem('token'));
+    this.usuario = usu;
+    this.user = this.usuario.user;
+    this.accountService.getFav().subscribe(
+      (res) => {
+        this.guardados = res
+        
+        this.guardados.push(post);
+        let result = this.guardados.filter((item,index)=>{
+          return this.guardados.indexOf(item) === index;
+        })
+        this.user.guardado = result;
+        console.log(this.user);
+        this.accountService.updateAccount(this.user.id,this.user).subscribe(
+          (res) => {
+            console.log(res)
+            this.saveToast();
+          },
+          (err) => {
+            console.log(err)
+          }
+        );
+      })
+    }
+  }

@@ -561,10 +561,16 @@
                 "role": {
                   "type": "string"
                 },
+                "publications": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "imagen": {
                   "type": "string"
                 },
-                "publications": {
+                "guardado": {
                   "type": "array",
                   "items": {
                     "type": "string"
