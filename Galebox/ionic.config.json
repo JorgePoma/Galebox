@@ -1,7 +1,0 @@
-{
-  "name": "Galebox",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
