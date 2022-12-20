@@ -8,7 +8,7 @@ export interface Post {
   "imagen": "string",
   "categoria": "",
   "estrellas": 0,
-  "user": "string",
+  "user": [],
   "users": [
     "string"
   ],

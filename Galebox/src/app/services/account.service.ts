@@ -48,7 +48,7 @@ export class AccountService {
     })
   }
 
-  updateAccount(id:string, user:User){
+  updateAccount(id:any, user:User){
     return this.http.put('http://localhost:1337/users/'+id,
     user)
   }

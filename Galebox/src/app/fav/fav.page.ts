@@ -71,8 +71,8 @@ export class FavPage implements OnInit {
     this.noSave = true;
     const usu = JSON.parse(localStorage.getItem('token'));
     this.user = usu.user;
-    console.log(this.user)
-    const aux = [];
+    console.log("usuario"+this.user)
+    let aux = [];
     for (let x = 0; x < this.guardados.length; x++) {
       const post = this.guardados[x];
       if (post.id != id) {

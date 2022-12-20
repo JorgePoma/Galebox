@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PostService } from "../services/post.service";
 import { AccountService } from "../services/account.service";
 import { Router } from '@angular/router';
@@ -10,53 +10,62 @@ import { isPlatformServer } from '@angular/common';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  
+export class HomePage implements OnInit {
 
-  posts:any =[]
-  accounts:any=[]
-  guardados:any=[]
+
+  posts: any;
+  accounts: any
+  guardados: any
   a = true
-  isAuth :boolean;
+  isAuth: boolean;
   noAuth: boolean;
-  isfav :boolean;
+  isfav: boolean;
 
-  p:any = {
-      "titulo": "",
-      "descripcion": "",
-      "imagen": "",
-      "categoria": "",
-      "estrellas": 0,
-      "user": "",
+  starts: any = [];
+
+  p: any = {
+    "titulo": "",
+    "descripcion": "",
+    "imagen": "",
+    "categoria": "",
+    "estrellas": 0,
+    "user": "",
   }
-  usuario:any = {
-    "jwt": "string",
+  usuario: any = {
+    "jwt": "",
     "user": {
-      "id": "string",
-      "username": "string",
-      "email": "string",
-      "guardado":[]
+      "id": "",
+      "username": "",
+      "email": "",
+      "guardado": []
     }
   }
-  user:any = {
-    "id": "string",
-    "username": "string",
-    "email": "string",
-    "guardado":[]
+  user: any = {
+    "id": "",
+    "username": "",
+    "email": "",
+    "guardado": []
   }
-  
+
   constructor(
     private postService: PostService,
     private accountService: AccountService,
     public toastController: ToastController,
     private menu: MenuController
-  ) { }
+  ) {
+    this.posts = [];
+    this.accounts = []
+    this.guardados = []
+  }
 
   ngOnInit() {
     this.usuario = localStorage.getItem('token');
     //this.getAccountById(this.usuario.user.id);
+    const usu = JSON.parse(localStorage.getItem('token'));
+    this.usuario = usu;
+    this.user = this.usuario.user;
   }
-    
+
   async openCustom() {
     await this.menu.enable(true, 'custom');
     await this.menu.open('custom');
@@ -70,110 +79,129 @@ export class HomePage {
     toast.present();
   }
 
-  loadPost(){
-    
+  loadPost() {
+
     this.postService.getPosts().subscribe(
       (res) => {
         this.posts = res;
+        this.posts.map(po => this.starts.push(po.estrellas));
         console.log(this.posts)
-      }, 
+        console.log(this.starts)
+      },
       (err) => console.log(err)
-      );
+    );
   }
 
-  loadAccount(){
+  loadAccount() {
     this.accountService.getAccount().subscribe(
       (res) => {
         this.accounts = res
-      }, 
+      },
       (err) => console.log(err)
-      );
+    );
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.loadPost();
     this.isLogin();
   }
 
-  verifyLogin(){
+  verifyLogin() {
     this.accountService.verifyLogin()
   }
 
-  getAccountById(id){
+  getAccountById(id) {
     this.postService.getPostById(id).subscribe(
-    (res) => {
-      this.usuario = res;
-    },
-    (err) => console.log(err)
+      (res) => {
+        this.usuario = res;
+      },
+      (err) => console.log(err)
     );
   }
 
-  logout(){
-      this.accountService.logout().subscribe(
-        (res) => {
-          console.log('sesion cerrada correctamente',res )
-          localStorage.clear();
-          //this.router.navigate(['/home'])
-          window.location.assign('http://localhost:8100/home');
-        },
-        (err) => {
-          console.log(err)
-        }
-      );
+  logout() {
+    this.accountService.logout().subscribe(
+      (res) => {
+        console.log('sesion cerrada correctamente', res)
+        localStorage.clear();
+        //this.router.navigate(['/home'])
+        window.location.assign('http://localhost:8100/home');
+      },
+      (err) => {
+        console.log(err)
+      }
+    );
   }
 
-  updateRate(id,numero){
-    this.postService.getPostById(id).subscribe(
-    (res) => {
-      this.p = res
-      console.log(this.p)
-      //console.log(this.p.estrellas)
-      this.p.estrellas = numero;
-      this.postService.updatePost(id,this.p).subscribe(
+  updateRate(i, id, numero) {
+    try {
+      const usu = JSON.parse(localStorage.getItem('token'));
+      this.usuario = usu;
+      this.user = this.usuario.user;
+      this.postService.getPostById(id).subscribe(
         (res) => {
-          
-          this.loadPost();
+          this.p = res
+          //console.log(this.p)
+          //console.log(this.p.estrellas)
+          this.p.estrellas = numero;
+          this.postService.updatePost(id, this.p).subscribe(
+            (res) => {
+              this.starts[i] = numero;
+              //this.loadPost();
+
+            },
+            (err) => console.log(err)
+          );
         },
         (err) => console.log(err)
       );
-    },
-    (err) => console.log(err)
-    );
+    } catch (error) {
+      window.location.assign('http://localhost:8100/login');
+    }
+
   }
-  isLogin(){
+  isLogin() {
     if (localStorage.length > 0) {
       this.isAuth = true;
-      this.noAuth = false; 
-    } else{
+      this.noAuth = false;
+    } else {
       this.isAuth = false;
-      this.noAuth = true; 
+      this.noAuth = true;
     }
   }
-  
 
-  addFav(post){
+
+  addFav(post) {
     const usu = JSON.parse(localStorage.getItem('token'));
     this.usuario = usu;
     this.user = this.usuario.user;
-    this.accountService.getFav().subscribe(
-      (res) => {
-        this.guardados = res
-        
-        this.guardados.push(post);
-        let result = this.guardados.filter((item,index)=>{
-          return this.guardados.indexOf(item) === index;
+    console.log(post.user.id+ " con "+ this.user.id)
+    if (post.user.id != this.user.id) {
+      this.accountService.getFav().subscribe(
+        (res) => {
+          this.guardados = res
+          console.log("guardados")
+          console.log(this.guardados)
+          this.guardados.push(post);
+          console.log("nuevo guardados")
+          console.log(this.guardados)
+          let result = this.guardados.filter((item, index) => {
+            return this.guardados.indexOf(item) === index;
+          })
+          console.log(result)
+          this.user.guardado = result;
+          //this.user.guardado = this.guardados;
+          console.log(this.user);
+          this.accountService.updateAccount(this.user.id, this.user).subscribe(
+            (res) => {
+              console.log(res)
+              this.saveToast();
+            },
+            (err) => {
+              console.log(err)
+            }
+          );
         })
-        this.user.guardado = result;
-        console.log(this.user);
-        this.accountService.updateAccount(this.user.id,this.user).subscribe(
-          (res) => {
-            console.log(res)
-            this.saveToast();
-          },
-          (err) => {
-            console.log(err)
-          }
-        );
-      })
     }
   }
+}
