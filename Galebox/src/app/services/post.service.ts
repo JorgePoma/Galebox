@@ -10,7 +10,6 @@ export interface Post {
   "estrellas": 0,
   "user": [],
   "users": [
-    "string"
   ],
   "published_at": "string",
   "created_by": "string",
@@ -45,8 +44,6 @@ export class PostService {
       titulo, descripcion,imagen, categoria, user
     })
   }
-
-  
 
   removePostById(id: string) {
     return this.http.delete('http://localhost:1337/publicacions/'+id)

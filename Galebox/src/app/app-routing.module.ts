@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './services/user/auth.guard';
+import { AuthGuard } from './services/user-guards/auth.guard';
+import { ModifyPostGuard } from './services/user-guards/modify-post.guard';
+import { ModifyUserGuard } from './services/user-guards/modify-user.guard';
 
 const routes: Routes = [
   {
@@ -22,24 +24,33 @@ const routes: Routes = [
   },
   {
     path: 'post-form',
-    loadChildren: () => import('./post-form/post-form.module').then( m => m.PostFormPageModule),canActivate:[AuthGuard],
+    loadChildren: () => import('./post-form/post-form.module').then( m => m.PostFormPageModule),canActivate:[AuthGuard], pathMatch: 'full',
   },
   {
     path: 'account',
-    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule),canActivate:[AuthGuard],
+    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule),canActivate:[AuthGuard], pathMatch: 'full',
   },
   {
     path: 'saved',
-    loadChildren: () => import('./saved/saved.module').then( m => m.SavedPageModule),canActivate:[AuthGuard],
+    loadChildren: () => import('./saved/saved.module').then( m => m.SavedPageModule),canActivate:[AuthGuard], pathMatch: 'full',
   },
   {
     path: 'post/edit/:postid',
-    loadChildren:() => import('./post-form/post-form.module').then(m => m.PostFormPageModule),canActivate:[AuthGuard],
+    loadChildren:() => import('./post-form/post-form.module').then(m => m.PostFormPageModule),canActivate:[AuthGuard, ModifyPostGuard], pathMatch: 'full',
+  },
+  {
+    path: 'account/edit/:userid',
+    loadChildren:() => import('./account-form/account-form.module').then(m => m.AccountFormPageModule),canActivate:[AuthGuard, ModifyUserGuard], pathMatch: 'full',
   },
   {
     path: 'fav',
-    loadChildren: () => import('./fav/fav.module').then( m => m.FavPageModule),canActivate:[AuthGuard],
+    loadChildren: () => import('./fav/fav.module').then( m => m.FavPageModule),canActivate:[AuthGuard], pathMatch: 'full',
+  },
+  {
+    path: 'account-form',
+    loadChildren: () => import('./account-form/account-form.module').then( m => m.AccountFormPageModule),canActivate:[AuthGuard], pathMatch: 'full',
   }
+
 
 ];
 

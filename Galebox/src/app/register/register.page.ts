@@ -30,7 +30,6 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
   captureFile(event):any{
-    console.log(event.target.files);
     const archivo = event.target.files[0]
     this.extraerBase64(archivo).then((imagen:any) =>{
     this.previsualizacion= imagen.base;
@@ -67,10 +66,10 @@ export class RegisterPage implements OnInit {
       this.uploadService.uploadImage(data).subscribe(
         (res) => {
           if(res){
-            console.log(res);
+            ;
             this.accountService.createAccount(username.value, email.value, password.value, this.role, res.secure_url).subscribe(
               (res) => {
-                console.log(res);
+                ;
                 this.router.navigate(['/login'])
               }, 
               (err) => console.error(err)

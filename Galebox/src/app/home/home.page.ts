@@ -4,6 +4,7 @@ import { AccountService } from "../services/account.service";
 import { Router } from '@angular/router';
 import { MenuController, ToastController } from '@ionic/angular';
 import { isPlatformServer } from '@angular/common';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,8 @@ export class HomePage implements OnInit {
 
 
   posts: any;
+  results: any;
+  aux:any
   accounts: any
   guardados: any
   a = true
@@ -29,22 +32,19 @@ export class HomePage implements OnInit {
     "imagen": "",
     "categoria": "",
     "estrellas": 0,
-    "user": "",
   }
   usuario: any = {
     "jwt": "",
     "user": {
       "id": "",
       "username": "",
-      "email": "",
-      "guardado": []
+      "email": ""
     }
   }
   user: any = {
     "id": "",
     "username": "",
-    "email": "",
-    "guardado": []
+    "email": ""
   }
 
   constructor(
@@ -54,16 +54,20 @@ export class HomePage implements OnInit {
     private menu: MenuController
   ) {
     this.posts = [];
+    this.results = []
+    this.aux = []
     this.accounts = []
     this.guardados = []
   }
 
   ngOnInit() {
-    this.usuario = localStorage.getItem('token');
     //this.getAccountById(this.usuario.user.id);
     const usu = JSON.parse(localStorage.getItem('token'));
-    this.usuario = usu;
-    this.user = this.usuario.user;
+    if(usu != null){
+      this.usuario = usu;
+      this.user = this.usuario.user;
+      this.getAccountById(this.user.id)
+    }
   }
 
   async openCustom() {
@@ -80,16 +84,32 @@ export class HomePage implements OnInit {
   }
 
   loadPost() {
-
+    this.starts = []
     this.postService.getPosts().subscribe(
       (res) => {
         this.posts = res;
         this.posts.map(po => this.starts.push(po.estrellas));
-        console.log(this.posts)
-        console.log(this.starts)
+
+        this.results = this.posts.map(e => e.categoria);
+        this.aux = [...this.posts];
       },
       (err) => console.log(err)
     );
+  }
+//buscador
+  handleChange(event) {
+    const query = event.target.value.toLowerCase();
+    if(query == ""){
+      this.loadPost()
+    }else{
+      this.posts = []
+      this.aux.map(
+        d => {
+          if(d.categoria.toLowerCase().indexOf(query) > -1){
+            this.posts.push(d);
+      }}
+      );
+    }
   }
 
   loadAccount() {
@@ -106,23 +126,19 @@ export class HomePage implements OnInit {
     this.isLogin();
   }
 
-  verifyLogin() {
-    this.accountService.verifyLogin()
-  }
 
   getAccountById(id) {
-    this.postService.getPostById(id).subscribe(
-      (res) => {
-        this.usuario = res;
+    this.accountService.getAccountById(id).subscribe(
+      (res)=>{
+        this.user = res
       },
-      (err) => console.log(err)
-    );
+      (err)=>console.log('err Usu',err)
+    )
   }
 
   logout() {
     this.accountService.logout().subscribe(
       (res) => {
-        console.log('sesion cerrada correctamente', res)
         localStorage.clear();
         //this.router.navigate(['/home'])
         window.location.assign('http://localhost:8100/home');
@@ -141,8 +157,6 @@ export class HomePage implements OnInit {
       this.postService.getPostById(id).subscribe(
         (res) => {
           this.p = res
-          //console.log(this.p)
-          //console.log(this.p.estrellas)
           this.p.estrellas = numero;
           this.postService.updatePost(id, this.p).subscribe(
             (res) => {
@@ -175,26 +189,23 @@ export class HomePage implements OnInit {
     const usu = JSON.parse(localStorage.getItem('token'));
     this.usuario = usu;
     this.user = this.usuario.user;
-    console.log(post.user.id+ " con "+ this.user.id)
-    if (post.user.id != this.user.id) {
+    this.getAccountById(this.user.id)
+    //if (post.user.id != this.user.id) {
       this.accountService.getFav().subscribe(
         (res) => {
           this.guardados = res
-          console.log("guardados")
-          console.log(this.guardados)
+
           this.guardados.push(post);
-          console.log("nuevo guardados")
-          console.log(this.guardados)
+
           let result = this.guardados.filter((item, index) => {
             return this.guardados.indexOf(item) === index;
           })
-          console.log(result)
-          this.user.guardado = result;
+
+          this.user.guardado = [...result];
           //this.user.guardado = this.guardados;
-          console.log(this.user);
+
           this.accountService.updateAccount(this.user.id, this.user).subscribe(
             (res) => {
-              console.log(res)
               this.saveToast();
             },
             (err) => {
@@ -202,6 +213,6 @@ export class HomePage implements OnInit {
             }
           );
         })
-    }
+    //}
   }
 }

@@ -32,7 +32,6 @@ export class SavedPage implements OnInit {
   loadMyPost(){
     
     const user = JSON.parse(localStorage.getItem('token'))
-    console.log(user.user.id)
     this.postService.getMyPost(user.user.id).subscribe(
       (res) => {
         this.posts = res
@@ -58,7 +57,6 @@ export class SavedPage implements OnInit {
       buttons:[{
         text:"Aceptar",
         handler: () => {
-          console.log(id);
           this.postService.removePostById(id).subscribe(
           (res) => {
             this.loadMyPost();

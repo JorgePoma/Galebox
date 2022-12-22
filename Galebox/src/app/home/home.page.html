@@ -1,15 +1,17 @@
 
 <ion-header [translucent]="false">
   <ion-toolbar>
-  <ion-item>
-
+    <ion-row class="ion-align-items-start">
     <div class="ion-page" id="main-content">
       <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
+        <ion-toolbar class="hd">
+          <ion-buttons slot="start" id="button">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
-          <ion-title style="color: #ef3b2d; font-family: 'Satisfy', bold; font-size: 2em;">Galebox</ion-title>
+          <ion-thumbnail slot="start">
+            <img id="logo" src="assets/icon/favicon.png">
+          </ion-thumbnail>
+          <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)" placeholder="Buscar Categoría"></ion-searchbar>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -17,7 +19,7 @@
       </ion-content>
     </div>
 
-  </ion-item>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
@@ -87,7 +89,10 @@
                   </ion-col>
                   <ion-col size="1" size-md="1">
                     <ion-label>
-                      <ion-icon *ngIf="post.user.id != user.id" name="bookmark-outline" slot="end" class="guardar"  (click)="addFav(post) " ></ion-icon>
+                      <ion-icon name="bookmark-outline" slot="end" class="guardar"  (click)="addFav(post) " ></ion-icon>
+                      <!--
+                        <ion-icon *ngIf="post.user.id != user.id" name="bookmark-outline" slot="end" class="guardar"  (click)="addFav(post) " ></ion-icon>
+                      -->
                     </ion-label>
                   </ion-col>
                 </ion-row>
@@ -97,7 +102,7 @@
                 <ion-grid>
                   
                   <ion-row>
-                    <ion-label sstyle="color: black">
+                    <ion-label>
                       <strong>
                         {{post.user.username}}
                       </strong>

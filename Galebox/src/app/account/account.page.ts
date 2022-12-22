@@ -56,7 +56,6 @@ export class AccountPage implements OnInit {
   }
 
   captureFile(event):any{
-    console.log(event.target.files);
     const archivo = event.target.files[0]
     this.extraerBase64(archivo).then((imagen:any) =>{
     this.previsualizacion= imagen.base;
@@ -87,7 +86,12 @@ export class AccountPage implements OnInit {
   getCurrentAccount(){
     const usu = JSON.parse(localStorage.getItem('token'));
     this.u = usu.user
-    console.log(this.u)
+    this.accountService.getAccountById(this.u.id).subscribe(
+      (res)=>{
+        this.u = res
+      },
+      (err)=>console.log('err Usu',err)
+    )
   }
 
   updateAccount(id, username, email){
@@ -101,7 +105,6 @@ export class AccountPage implements OnInit {
       this.uploadService.uploadImage(data).subscribe(
         (res) => {
           if(res){
-            console.log(res);
             img_url = res.secure_url;
             this.accountService.getAccountById(id).subscribe(
               (res) => {
@@ -117,7 +120,6 @@ export class AccountPage implements OnInit {
                 }
                 this.accountService.updateAccount(id,this.user).subscribe(
                 (res) => {
-                  console.log(res);
                   this.loading=false;
                 },
                 (err) => {console.log('err1',err)

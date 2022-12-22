@@ -42,13 +42,11 @@ export class LoginPage implements OnInit {
           this.usuario = localStorage.setItem('token',JSON.stringify(res));
           //this.router.navigate(['/home'])
           window.location.assign('http://localhost:8100/home');
-          console.log(JSON.parse(localStorage.getItem('token')));
         },
           (err) => {console.log(err);
           this.presentToast();}
         );
       }else{
-        console.log('ya estas logueado')
       }
     }
   }
