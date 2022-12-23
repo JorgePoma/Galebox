@@ -1,7 +1,7 @@
 /*
 import { Injectable } from '@angular/core';
 
-const API_URL = "http://localhost:1337";
+const API_URL = "${process.env.STRAPI_URL_BASE}";
 
 export const callApi = async (path, method, body) => {
   const response = await fetch(`${API_URL}${path}`, {

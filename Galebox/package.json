@@ -24,6 +24,8 @@
     "@capacitor/core": "^3.2.0",
     "@ionic/angular": "^5.5.2",
     "@ionic/cli-plugin-cordova": "1.5.0",
+    "cross-env": "^7.0.3",
+    "env": "^0.0.2",
     "Galebox": "file:android",
     "npm": "^7.21.0",
     "rxjs": "~6.6.0",

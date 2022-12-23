@@ -28,7 +28,7 @@ export interface User {
 })
 export class AccountService {
 
-  APIC = 'http://localhost:1337/auth/local'
+  APIC = '${process.env.STRAPI_URL_BASE}/auth/local'
   post
   account
 
@@ -42,17 +42,17 @@ export class AccountService {
   }
 
   getAccountById(id: string) {
-    return this.http.get('http://localhost:1337/users/' + id)
+    return this.http.get('${process.env.STRAPI_URL_BASE}/users/' + id)
   }
 
   createAccount(username: string, email: string, password: string, role: string, imagen: string) {
-    return this.http.post('http://localhost:1337/auth/local/register', {
+    return this.http.post('${process.env.STRAPI_URL_BASE}/auth/local/register', {
       username, email, password, role, imagen
     })
   }
 
   updateAccount(id: any, user: User) {
-    return this.http.put('http://localhost:1337/users/' + id,
+    return this.http.put('${process.env.STRAPI_URL_BASE}/users/' + id,
       user)
   }
 
@@ -64,7 +64,7 @@ export class AccountService {
   }
 
   logout() {
-    return this.http.post('http://localhost:1337/logout', {})
+    return this.http.post('${process.env.STRAPI_URL_BASE}/logout', {})
   }
 
   verifyModifyPost(id: any): Observable<boolean> {
@@ -97,14 +97,14 @@ export class AccountService {
     return false
   }
   verifyLogin() {
-    return this.http.get('http://localhost:1337/users/me')
+    return this.http.get('${process.env.STRAPI_URL_BASE}/users/me')
   }
 
   isFav(post) {
-    return this.http.get('http://localhost:1337/publicacions?users.guardado=' + post)
+    return this.http.get('${process.env.STRAPI_URL_BASE}/publicacions?users.guardado=' + post)
   }
   getFav() {
-    return this.http.get('http://localhost:1337/publicacions?users.guardado.id_gte=0')
+    return this.http.get('${process.env.STRAPI_URL_BASE}/publicacions?users.guardado.id_gte=0')
   }
 }
 
