@@ -141,7 +141,7 @@ export class HomePage implements OnInit {
       (res) => {
         localStorage.clear();
         //this.router.navigate(['/home'])
-        window.location.assign('http://localhost:8100/home');
+        window.location.assign('${process.env.URL_BASE}/home');
       },
       (err) => {
         console.log(err)
@@ -170,7 +170,7 @@ export class HomePage implements OnInit {
         (err) => console.log(err)
       );
     } catch (error) {
-      window.location.assign('http://localhost:8100/login');
+      window.location.assign('${process.env.URL_BASE}/login');
     }
 
   }
