@@ -7,7 +7,7 @@ services:
     repo: https://github.com/JorgePoma/Galebox
     branch: master
     buildCommand: cd Galebox-Backend && npm install
-    startCommand: npm start serve
+    startCommand: npm develop serve
     healthCheckPath: /_health
     envVars:
       - key: NODE_VERSION
