@@ -41,7 +41,7 @@ services:
     repo: https://github.com/JorgePoma/Galebox
     branch: master
     buildCommand: cd Galebox-Backend && npm install
-    startCommand: ionic serve
+    startCommand: ionic build --prod
     envVars:
       - key: STRAPI_URL_BASE
         fromService:
