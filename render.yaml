@@ -1,12 +1,12 @@
 services:
   - type: web
-    name: Galebox-frontend
+    name: Galebox-backend
     env: node
     plan: free
     # Update the following line with your Strapi GitHub repo
     repo: https://github.com/JorgePoma/Galebox
     branch: master
-    buildCommand: cd Galebox && npm install && npm run build
+    buildCommand: cd Galebox-Backend && npm install
     startCommand: npm start
     healthCheckPath: /_health
     envVars:
@@ -34,19 +34,19 @@ services:
         generateValue: true
 
   - type: web
-    name: Galebox-backend
+    name: Galebox-frontend
     env: node
     plan: free
     # Update the following line with your Remix GitHub repo
     repo: https://github.com/JorgePoma/Galebox
     branch: master
-    buildCommand: cd Galebox-Backend && npm install && ng build --prod
-    startCommand: ng serve --external
+    buildCommand: cd Galebox && npm install && npm run build
+    startCommand: ionic serve
     envVars:
       - key: STRAPI_URL_BASE
         fromService:
           type: web
-          name: Galebox-frontend
+          name: Galebox-backend
           envVarKey: RENDER_EXTERNAL_URL
 
 databases:
