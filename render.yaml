@@ -5,7 +5,7 @@ services:
     plan: free
     # Update the following line with your Strapi GitHub repo
     repo: https://github.com/JorgePoma/Galebox
-    branch: master
+    branch: develop
     buildCommand: cd Galebox-Backend && npm install && npm run build
     startCommand: cd Galebox-Backend && npm start
     healthCheckPath: /_health
@@ -39,7 +39,7 @@ services:
     plan: free
     # Update the following line with your Remix GitHub repo
     repo: https://github.com/JorgePoma/Galebox
-    branch: master
+    branch: develop
     buildCommand: cd Galebox && npm install && npm run build
     startCommand: cd Galebox && ionic serve
     envVars:
