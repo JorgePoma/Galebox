@@ -6,8 +6,8 @@ services:
     # Update the following line with your Strapi GitHub repo
     repo: https://github.com/JorgePoma/Galebox
     branch: develop
-    buildCommand: cd Galebox-Backend && npm install && npm run build
-    startCommand: cd Galebox-Backend && npm start
+    buildCommand: cd Galebox-Backend && yarn install && yarn build
+    startCommand: cd Galebox-Backend && yarn start
     healthCheckPath: /_health
     envVars:
       - key: NODE_VERSION
