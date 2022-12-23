@@ -9,8 +9,8 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
+    "@strapi/logger": "^4.5.4",
     "knex": "0.21.18",
     "mysql": "2.18.1",
     "pg": "^8.7.0",
@@ -35,8 +35,8 @@
     "uuid": "d433ba7c-ada8-4f87-bf09-2719d2487dd3"
   },
   "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=10.16.0 <=14.x.x",
+    "npm": "^6.0.0"
   },
   "license": "MIT"
 }
