@@ -40,8 +40,8 @@ services:
     # Update the following line with your Remix GitHub repo
     repo: https://github.com/JorgePoma/Galebox
     branch: master
-    buildCommand: cd Galebox-Backend && npm install && ionic build --prod
-    startCommand: ionic serve --external
+    buildCommand: cd Galebox-Backend && npm install && ng build --prod
+    startCommand: ng serve --external
     envVars:
       - key: STRAPI_URL_BASE
         fromService:
