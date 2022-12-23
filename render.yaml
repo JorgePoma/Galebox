@@ -33,7 +33,7 @@ services:
       - key: APP_KEYS
         generateValue: true
 
-  - type: web
+  - type: static
     name: Galebox-frontend
     env: node
     plan: free
@@ -41,7 +41,7 @@ services:
     repo: https://github.com/JorgePoma/Galebox
     branch: master
     buildCommand: cd Galebox && npm install && npm run build
-    startCommand: cd Galebox && ionic serve
+    startCommand: cd Galebox/www
     envVars:
       - key: STRAPI_URL_BASE
         fromService:
