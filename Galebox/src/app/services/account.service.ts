@@ -28,7 +28,7 @@ export interface User {
 })
 export class AccountService {
 
-  APIC = '${process.env.STRAPI_URL_BASE}/auth/local'
+  APIC = '${process.env.STRAPI_URL_BASE}/api/auth/local'
   post
   account
 
@@ -46,7 +46,7 @@ export class AccountService {
   }
 
   createAccount(username: string, email: string, password: string, role: string, imagen: string) {
-    return this.http.post('${process.env.STRAPI_URL_BASE}/auth/local/register', {
+    return this.http.post('${process.env.STRAPI_URL_BASE}/api/auth/local/register', {
       username, email, password, role, imagen
     })
   }
