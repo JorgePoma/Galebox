@@ -47,8 +47,7 @@ export class AccountService {
   getAccountById(id: string) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(authToken)
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', authToken);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/users/' + id,{ headers })
   }
 
