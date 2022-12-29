@@ -36,12 +36,12 @@ export class PostService {
 
   getPostById(id:string) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
-    return this.http.get('https://backend-qc57.onrender.com/api/publications/'+id)
+    return this.http.get('https://backend-qc57.onrender.com/api/publications/'+id,{ headers })
   }
 
   getMyPost(user){
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
-    return this.http.get('https://backend-qc57.onrender.com/api/publications?user='+user)
+    return this.http.get('https://backend-qc57.onrender.com/api/publications?user='+user,{ headers })
   }
 
   createPost(titulo: string, descripcion:string, imagen:string , categoria:string, user:User ) {
@@ -54,13 +54,13 @@ export class PostService {
 
   removePostById(id: string) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
-    return this.http.delete('https://backend-qc57.onrender.com/api/publications/'+id)
+    return this.http.delete('https://backend-qc57.onrender.com/api/publications/'+id,{ headers })
   }
 
   updatePost(id:string, post:Post){
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.put('https://backend-qc57.onrender.com/api/publications/'+id,
-      post
+      post,{ headers }
     )
   }
 }

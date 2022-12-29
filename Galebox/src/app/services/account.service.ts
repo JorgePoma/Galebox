@@ -41,14 +41,14 @@ export class AccountService {
 
   getAccount() {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
-    return this.http.get(this.APIC)
+    return this.http.get(this.APIC,{ headers })
   }
 
   getAccountById(id: string) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = this.usu.jwt;
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', authToken);
-    return this.http.get('https://backend-qc57.onrender.com/api/users/' + id)
+    return this.http.get('https://backend-qc57.onrender.com/api/users/' + id,{ headers })
   }
 
   createAccount(username: string, email: string, password: string, role: string, imagen: string) {
@@ -60,7 +60,7 @@ export class AccountService {
   updateAccount(id: any, user: User) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.put('https://backend-qc57.onrender.com/api/users/' + id,
-      user)
+      user,{ headers })
   }
 
   login(username: string, password: string) {
@@ -75,7 +75,6 @@ export class AccountService {
   }
 
   verifyModifyPost(id: any): Observable<boolean> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     var currentUser = JSON.parse(localStorage.getItem('token'));
     var subject = new Subject<boolean>();
     var out: boolean
@@ -97,7 +96,6 @@ export class AccountService {
   }
 
   verifyModifyUser(id: any) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     var currentUser = JSON.parse(localStorage.getItem('token'));
     var aux = parseInt(id.userid)
     if (currentUser.user.id === aux) {
@@ -107,16 +105,16 @@ export class AccountService {
   }
   verifyLogin() {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
-    return this.http.get('https://backend-qc57.onrender.com/api/users/me')
+    return this.http.get('https://backend-qc57.onrender.com/api/users/me',{ headers })
   }
 
   isFav(post) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
-    return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado=' + post)
+    return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado=' + post,{ headers })
   }
   getFav() {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
-    return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado.id_gte=0')
+    return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado.id_gte=0',{ headers })
   }
 }
 
