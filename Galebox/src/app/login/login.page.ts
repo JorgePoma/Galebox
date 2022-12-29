@@ -37,11 +37,10 @@ export class LoginPage implements OnInit {
       if(localStorage.length == 0){
         this.accountService.login(username.value, password.value).subscribe(
           (res) => {
-          
           this.usuario = res;
           this.usuario = localStorage.setItem('token',JSON.stringify(res));
           //this.router.navigate(['/home'])
-          window.location.assign('/home');
+          window.location.assign('/');
         },
           (err) => {console.log(err);
           this.presentToast();}
