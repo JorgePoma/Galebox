@@ -101,10 +101,10 @@ export class AccountService {
   }
 
   isFav(post) {
-    return this.http.get('https://backend-qc57.onrender.com/api/publicacions?users.guardado=' + post)
+    return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado=' + post)
   }
   getFav() {
-    return this.http.get('https://backend-qc57.onrender.com/api/publicacions?users.guardado.id_gte=0')
+    return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado.id_gte=0')
   }
 }
 
