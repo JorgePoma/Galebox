@@ -1,0 +1,20 @@
+{
+    "buildCommand": "npm install",
+    "startCommand": "node server.js",
+    "env": {
+        "CLOUDINARY_API_KEY": "912639123142587",
+        "CLOUDINARY_API_SECRET": "X8dFJvvbfP2vaYxJBU9Kr-Fswqo",
+        "CLOUDINARY_CLOUD_NAME": "cuarteto-dinamico",
+        "DATABASE_CLIENT": "postgres",
+        "DATABASE_HOST": "pg",
+        "DATABASE_PORT": "5432",
+        "DATABASE_NAME": "galeboxdb",
+        "DATABASE_USERNAME": "app",
+        "DATABASE_PASSWORD": "secret",
+        "DATABASE_SSL": "false",
+        "DATABASE_POOL_MIN": 2,
+        "DATABASE_POOL_MAX": 10,
+        "APP_HOST": "0.0.0.0",
+        "APP_PORT": "1337"
+    }
+}
