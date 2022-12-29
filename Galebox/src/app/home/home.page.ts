@@ -139,7 +139,7 @@ export class HomePage implements OnInit {
 
   logout() {
     this.accountService.logout()
-    window.location.assign('${process.env.URL_BASE}/home');
+    window.location.assign('${process.env.URL_BASE}');
   }
 
   updateRate(i, id, numero) {

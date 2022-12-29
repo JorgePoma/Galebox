@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
           this.usuario = res;
           this.usuario = localStorage.setItem('token',JSON.stringify(res));
           //this.router.navigate(['/home'])
-          window.location.assign('${process.env.URL_BASE}/home');
+          window.location.assign('${process.env.URL_BASE}');
         },
           (err) => {console.log(err);
           this.presentToast();}
