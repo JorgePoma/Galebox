@@ -28,7 +28,7 @@ export interface User {
 })
 export class AccountService {
 
-  APIC = '${process.env.STRAPI_URL_BASE}/api/auth/local'
+  APIC = 'https://backend-qc57.onrender.com/api/auth/local'
   post
   account
 
@@ -42,17 +42,17 @@ export class AccountService {
   }
 
   getAccountById(id: string) {
-    return this.http.get('${process.env.STRAPI_URL_BASE}/api/users/' + id)
+    return this.http.get('https://backend-qc57.onrender.com/api/users/' + id)
   }
 
   createAccount(username: string, email: string, password: string, role: string, imagen: string) {
-    return this.http.post('${process.env.STRAPI_URL_BASE}/api/auth/local/register', {
+    return this.http.post('https://backend-qc57.onrender.com/api/auth/local/register', {
       username, email, password, role, imagen
     })
   }
 
   updateAccount(id: any, user: User) {
-    return this.http.put('${process.env.STRAPI_URL_BASE}/api/users/' + id,
+    return this.http.put('https://backend-qc57.onrender.com/api/users/' + id,
       user)
   }
 
@@ -97,14 +97,14 @@ export class AccountService {
     return false
   }
   verifyLogin() {
-    return this.http.get('${process.env.STRAPI_URL_BASE}/api/users/me')
+    return this.http.get('https://backend-qc57.onrender.com/api/users/me')
   }
 
   isFav(post) {
-    return this.http.get('${process.env.STRAPI_URL_BASE}/api/publicacions?users.guardado=' + post)
+    return this.http.get('https://backend-qc57.onrender.com/api/publicacions?users.guardado=' + post)
   }
   getFav() {
-    return this.http.get('${process.env.STRAPI_URL_BASE}/api/publicacions?users.guardado.id_gte=0')
+    return this.http.get('https://backend-qc57.onrender.com/api/publicacions?users.guardado.id_gte=0')
   }
 }
 

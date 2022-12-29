@@ -1,7 +1,7 @@
 /*
 import { Injectable } from '@angular/core';
 
-const API_URL = "${process.env.STRAPI_URL_BASE}";
+const API_URL = "https://backend-qc57.onrender.com";
 
 export const callApi = async (path, method, body) => {
   const response = await fetch(`${API_URL}${path}`, {

@@ -21,7 +21,7 @@ export interface Post {
 })
 export class PostService {
 
-  API = '${process.env.STRAPI_URL_BASE}/api/publicacions'
+  API = 'https://backend-qc57.onrender.com/api/publicacions'
 
   constructor(
     private http: HttpClient
@@ -32,11 +32,11 @@ export class PostService {
   }
 
   getPostById(id:string) {
-    return this.http.get('${process.env.STRAPI_URL_BASE}/api/publicacions/'+id)
+    return this.http.get('https://backend-qc57.onrender.com/api/publicacions/'+id)
   }
 
   getMyPost(user){
-    return this.http.get('${process.env.STRAPI_URL_BASE}/api/publicacions?user='+user)
+    return this.http.get('https://backend-qc57.onrender.com/api/publicacions?user='+user)
   }
 
   createPost(titulo: string, descripcion:string, imagen:string , categoria:string, user:User ) {
@@ -46,11 +46,11 @@ export class PostService {
   }
 
   removePostById(id: string) {
-    return this.http.delete('${process.env.STRAPI_URL_BASE}/api/publicacions/'+id)
+    return this.http.delete('https://backend-qc57.onrender.com/api/publicacions/'+id)
   }
 
   updatePost(id:string, post:Post){
-    return this.http.put('${process.env.STRAPI_URL_BASE}/api/publicacions/'+id,
+    return this.http.put('https://backend-qc57.onrender.com/api/publicacions/'+id,
       post
     )
   }

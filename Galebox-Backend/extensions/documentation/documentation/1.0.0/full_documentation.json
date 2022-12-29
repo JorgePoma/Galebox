@@ -23,7 +23,7 @@
   },
   "servers": [
     {
-      "url": "${process.env.STRAPI_URL_BASE}",
+      "url": "https://backend-qc57.onrender.com",
       "description": "Development server"
     },
     {
