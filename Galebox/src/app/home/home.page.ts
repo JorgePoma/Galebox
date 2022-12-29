@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
 
   posts: any;
   results: any;
-  aux:any
+  aux: any
   accounts: any
   guardados: any
   a = true
@@ -63,7 +63,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     //this.getAccountById(this.usuario.user.id);
     const usu = JSON.parse(localStorage.getItem('token'));
-    if(usu != null){
+    if (usu != null) {
       this.usuario = usu;
       this.user = this.usuario.user;
       this.getAccountById(this.user.id)
@@ -96,18 +96,19 @@ export class HomePage implements OnInit {
       (err) => console.log(err)
     );
   }
-//buscador
+  //buscador
   handleChange(event) {
     const query = event.target.value.toLowerCase();
-    if(query == ""){
+    if (query == "") {
       this.loadPost()
-    }else{
+    } else {
       this.posts = []
       this.aux.map(
         d => {
-          if(d.categoria.toLowerCase().indexOf(query) > -1){
+          if (d.categoria.toLowerCase().indexOf(query) > -1) {
             this.posts.push(d);
-      }}
+          }
+        }
       );
     }
   }
@@ -129,24 +130,16 @@ export class HomePage implements OnInit {
 
   getAccountById(id) {
     this.accountService.getAccountById(id).subscribe(
-      (res)=>{
+      (res) => {
         this.user = res
       },
-      (err)=>console.log('err Usu',err)
+      (err) => console.log('err Usu', err)
     )
   }
 
   logout() {
-    this.accountService.logout().subscribe(
-      (res) => {
-        localStorage.clear();
-        //this.router.navigate(['/home'])
-        window.location.assign('${process.env.URL_BASE}/home');
-      },
-      (err) => {
-        console.log(err)
-      }
-    );
+    this.accountService.logout()
+    window.location.assign('${process.env.URL_BASE}/home');
   }
 
   updateRate(i, id, numero) {
@@ -191,28 +184,28 @@ export class HomePage implements OnInit {
     this.user = this.usuario.user;
     this.getAccountById(this.user.id)
     //if (post.user.id != this.user.id) {
-      this.accountService.getFav().subscribe(
-        (res) => {
-          this.guardados = res
+    this.accountService.getFav().subscribe(
+      (res) => {
+        this.guardados = res
 
-          this.guardados.push(post);
+        this.guardados.push(post);
 
-          let result = this.guardados.filter((item, index) => {
-            return this.guardados.indexOf(item) === index;
-          })
-
-          this.user.guardado = [...result];
-          //this.user.guardado = this.guardados;
-
-          this.accountService.updateAccount(this.user.id, this.user).subscribe(
-            (res) => {
-              this.saveToast();
-            },
-            (err) => {
-              console.log(err)
-            }
-          );
+        let result = this.guardados.filter((item, index) => {
+          return this.guardados.indexOf(item) === index;
         })
+
+        this.user.guardado = [...result];
+        //this.user.guardado = this.guardados;
+
+        this.accountService.updateAccount(this.user.id, this.user).subscribe(
+          (res) => {
+            this.saveToast();
+          },
+          (err) => {
+            console.log(err)
+          }
+        );
+      })
     //}
   }
 }
