@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from './account.service';
 
 export interface Post {
@@ -25,8 +25,9 @@ export class PostService {
   usu = JSON.parse(localStorage.getItem('token'));
   authToken: any = this.usu.jwt;
 
+
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
     ) { }
 
   getPosts() {
@@ -34,28 +35,30 @@ export class PostService {
   }
 
   getPostById(id:string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.get('https://backend-qc57.onrender.com/api/publications/'+id)
   }
 
   getMyPost(user){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.get('https://backend-qc57.onrender.com/api/publications?user='+user)
   }
 
   createPost(titulo: string, descripcion:string, imagen:string , categoria:string, user:User ) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.post(this.API,{
       titulo, descripcion,imagen, categoria, user
-    },{
-      headers: {
-        'Authorization': `Bearer ${this.authToken}`
-      }
-    })
+    },{ headers }
+    )
   }
 
   removePostById(id: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.delete('https://backend-qc57.onrender.com/api/publications/'+id)
   }
 
   updatePost(id:string, post:Post){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.put('https://backend-qc57.onrender.com/api/publications/'+id,
       post
     )
