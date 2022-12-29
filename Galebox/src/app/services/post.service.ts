@@ -35,6 +35,7 @@ export class PostService {
   }
 
   getPostById(id:string) {
+    console.log(this.authToken)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.authToken);
     return this.http.get('https://backend-qc57.onrender.com/api/publications/'+id,{ headers })
   }
