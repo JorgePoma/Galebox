@@ -22,6 +22,8 @@ export interface Post {
 export class PostService {
 
   API = 'https://backend-qc57.onrender.com/api/publications'
+  usu = JSON.parse(localStorage.getItem('token'));
+  authToken: any = this.usu.jwt;
 
   constructor(
     private http: HttpClient
@@ -42,6 +44,10 @@ export class PostService {
   createPost(titulo: string, descripcion:string, imagen:string , categoria:string, user:User ) {
     return this.http.post(this.API,{
       titulo, descripcion,imagen, categoria, user
+    },{
+      headers: {
+        'Authorization': `Bearer ${this.authToken}`
+      }
     })
   }
 
