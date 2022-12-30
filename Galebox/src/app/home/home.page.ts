@@ -93,10 +93,7 @@ export class HomePage implements OnInit {
       (res) => {
         this.res = res
         this.posts = this.res.data
-        console.log(this.res)
-        console.log(this.posts)
-        console.log(this.posts[0].attributes.user)
-        this.posts.map(po => this.starts.push(po.estrellas));
+        this.posts.map(po => this.starts.push(po.attributes.estrellas));
 
         this.results = this.posts.map(e => e.categoria);
         this.aux = [...this.posts];

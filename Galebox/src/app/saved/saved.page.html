@@ -22,14 +22,14 @@
           <ion-col *ngFor="let post of posts" size="12" size-md="4">
             <ion-card>
               <ion-card-header>
-                <ion-card-title style="margin-top: 3vh;">{{post.titulo}}</ion-card-title>
+                <ion-card-title style="margin-top: 3vh;">{{post.attributes.titulo}}</ion-card-title>
                 <ion-chip>
-                  <ion-label>{{post.categoria}}</ion-label>
+                  <ion-label>{{post.attributes.categoria}}</ion-label>
                 </ion-chip>
               </ion-card-header>
-              <img src={{post.imagen}} style="cursor: pointer;">
+              <img src={{post.attributes.imagen}} style="cursor: pointer;">
               <ion-card-content> 
-                <ion-label>{{post.descripcion}}</ion-label> 
+                <ion-label>{{post.attributes.descripcion}}</ion-label> 
                   <div style="padding-top: 4vh; text-align: end;">
                     
                       <ion-button color="warning" [routerLink]="['/','post','edit',post.id]" >Modificar</ion-button>

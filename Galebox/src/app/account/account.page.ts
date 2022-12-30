@@ -89,7 +89,6 @@ export class AccountPage implements OnInit {
     this.accountService.getAccountById(this.u.id).subscribe(
       (res)=>{
         this.u = res
-        console.log(res)
       },
       (err)=>console.log('err Usu',err)
     )

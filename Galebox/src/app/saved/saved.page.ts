@@ -11,6 +11,9 @@ import { Router, ActivatedRoute } from "@angular/router";
 export class SavedPage implements OnInit {
 
   posts:any =[]
+  res: any = {
+    "data":[]
+  }
 
   constructor(
     private postService: PostService,
@@ -34,7 +37,8 @@ export class SavedPage implements OnInit {
     const user = JSON.parse(localStorage.getItem('token'))
     this.postService.getMyPost(user.user.id).subscribe(
       (res) => {
-        this.posts = res
+        this.res = res
+        this.posts = this.res.data
         if(this.posts.length == 0){
           this.presentToast();
         }

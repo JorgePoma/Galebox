@@ -36,7 +36,6 @@ export class PostService {
   getPostById(id:string) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/publications/'+id,{ headers })
   }
@@ -44,15 +43,13 @@ export class PostService {
   getMyPost(user){
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
-    return this.http.get('https://backend-qc57.onrender.com/api/publications?user='+user,{ headers })
+    return this.http.get('https://backend-qc57.onrender.com/api/publications?populate=%2A&filters[user][id][$eq]='+user,{ headers })
   }
 
   createPost(titulo: string, descripcion:string, imagen:string , categoria:string, user:User ) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.post(this.API,{
       titulo, descripcion,imagen, categoria, user
@@ -63,7 +60,6 @@ export class PostService {
   removePostById(id: string) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.delete('https://backend-qc57.onrender.com/api/publications/'+id,{ headers })
   }
@@ -71,7 +67,6 @@ export class PostService {
   updatePost(id:string, post:Post){
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.put('https://backend-qc57.onrender.com/api/publications/'+id,
       post,{ headers }

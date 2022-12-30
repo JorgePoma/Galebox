@@ -29,6 +29,7 @@ export interface User {
 export class AccountService {
 
   APIC = 'https://backend-qc57.onrender.com/api/auth/local'
+  APIUser = 'https://backend-qc57.onrender.com/api/users'
   post
   account
 
@@ -40,15 +41,13 @@ export class AccountService {
   getAccount() {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
-    return this.http.get(this.APIC,{ headers })
+    return this.http.get("https://backend-qc57.onrender.com/api/users/me",{ headers })
   }
 
   getAccountById(id: string) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/users/' + id,{ headers })
   }
@@ -62,7 +61,6 @@ export class AccountService {
   updateAccount(id: any, user: User) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.put('https://backend-qc57.onrender.com/api/users/' + id,
       user,{ headers })
@@ -111,7 +109,6 @@ export class AccountService {
   verifyLogin() {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/users/me',{ headers })
   }
@@ -119,14 +116,12 @@ export class AccountService {
   isFav(post) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado=' + post,{ headers })
   }
   getFav() {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.jwt;
-    console.log(`Bearer ${authToken}`)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado.id_gte=0',{ headers })
   }
