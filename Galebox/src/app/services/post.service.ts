@@ -30,7 +30,7 @@ export class PostService {
     ) { }
 
   getPosts() {
-    return this.http.get(this.API)
+    return this.http.get(this.API+"?populate=%2A")
   }
 
   getPostById(id:string) {
