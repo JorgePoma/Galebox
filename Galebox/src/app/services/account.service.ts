@@ -31,8 +31,6 @@ export class AccountService {
   APIC = 'https://backend-qc57.onrender.com/api/auth/local'
   post
   account
-  usu = JSON.parse(localStorage.getItem('token'));
-  authToken: any = this.usu.jwt;
 
   constructor(
     private http: HttpClient,
@@ -40,12 +38,18 @@ export class AccountService {
   ) { }
 
   getAccount() {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${this.authToken}`);
+    const usu = JSON.parse(localStorage.getItem('token'));
+    const authToken = usu.jwt;
+    console.log(`Bearer ${authToken}`)
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get(this.APIC,{ headers })
   }
 
   getAccountById(id: string) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${this.authToken}`);
+    const usu = JSON.parse(localStorage.getItem('token'));
+    const authToken = usu.jwt;
+    console.log(`Bearer ${authToken}`)
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/users/' + id,{ headers })
   }
 
@@ -56,7 +60,10 @@ export class AccountService {
   }
 
   updateAccount(id: any, user: User) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${this.authToken}`);
+    const usu = JSON.parse(localStorage.getItem('token'));
+    const authToken = usu.jwt;
+    console.log(`Bearer ${authToken}`)
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.put('https://backend-qc57.onrender.com/api/users/' + id,
       user,{ headers })
   }
@@ -102,16 +109,25 @@ export class AccountService {
     return false
   }
   verifyLogin() {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${this.authToken}`);
+    const usu = JSON.parse(localStorage.getItem('token'));
+    const authToken = usu.jwt;
+    console.log(`Bearer ${authToken}`)
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/users/me',{ headers })
   }
 
   isFav(post) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${this.authToken}`);
+    const usu = JSON.parse(localStorage.getItem('token'));
+    const authToken = usu.jwt;
+    console.log(`Bearer ${authToken}`)
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado=' + post,{ headers })
   }
   getFav() {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${this.authToken}`);
+    const usu = JSON.parse(localStorage.getItem('token'));
+    const authToken = usu.jwt;
+    console.log(`Bearer ${authToken}`)
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.get('https://backend-qc57.onrender.com/api/publications?users.guardado.id_gte=0',{ headers })
   }
 }

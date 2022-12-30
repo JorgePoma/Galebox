@@ -26,6 +26,10 @@ export class HomePage implements OnInit {
 
   starts: any = [];
 
+  res: any = {
+    "data":[]
+  }
+
   p: any = {
     "titulo": "",
     "descripcion": "",
@@ -87,7 +91,11 @@ export class HomePage implements OnInit {
     this.starts = []
     this.postService.getPosts().subscribe(
       (res) => {
-        this.posts = res;
+        this.res = res
+        this.posts = this.res.data
+        console.log(this.res)
+        console.log(this.posts)
+        console.log(this.posts[0].attributes.user)
         this.posts.map(po => this.starts.push(po.estrellas));
 
         this.results = this.posts.map(e => e.categoria);
