@@ -18,7 +18,6 @@ export class HomePage implements OnInit {
   results: any;
   aux: any
   accounts: any
-  guardados: any
   a = true
   isAuth: boolean;
   noAuth: boolean;
@@ -27,15 +26,14 @@ export class HomePage implements OnInit {
   starts: any = [];
 
   res: any = {
-    "data":[]
+    "data": []
   }
 
   p: any = {
-    "titulo": "",
-    "descripcion": "",
-    "imagen": "",
-    "categoria": "",
-    "estrellas": 0,
+    data: {
+      estrellas: 0
+    }
+
   }
   usuario: any = {
     "jwt": "",
@@ -61,16 +59,13 @@ export class HomePage implements OnInit {
     this.results = []
     this.aux = []
     this.accounts = []
-    this.guardados = []
   }
 
   ngOnInit() {
     //this.getAccountById(this.usuario.user.id);
     const usu = JSON.parse(localStorage.getItem('token'));
     if (usu != null) {
-      this.usuario = usu;
-      this.user = this.usuario.user;
-      this.getAccountById(this.user.id)
+      this.getAccountById()
     }
   }
 
@@ -93,6 +88,9 @@ export class HomePage implements OnInit {
       (res) => {
         this.res = res
         this.posts = this.res.data
+        console.log(this.res)
+        console.log(this.posts)
+        console.log(this.posts[0].attributes.user)
         this.posts.map(po => this.starts.push(po.attributes.estrellas));
 
         this.results = this.posts.map(e => e.categoria);
@@ -133,8 +131,8 @@ export class HomePage implements OnInit {
   }
 
 
-  getAccountById(id) {
-    this.accountService.getAccountById(id).subscribe(
+  getAccountById() {
+    this.accountService.getAccount().subscribe(
       (res) => {
         this.user = res
       },
@@ -149,13 +147,11 @@ export class HomePage implements OnInit {
 
   updateRate(i, id, numero) {
     try {
-      const usu = JSON.parse(localStorage.getItem('token'));
-      this.usuario = usu;
-      this.user = this.usuario.user;
       this.postService.getPostById(id).subscribe(
         (res) => {
-          this.p = res
-          this.p.estrellas = numero;
+          //this.p = this.getValues(res)
+          //console.log(this.p)
+          this.p.data.estrellas = numero;
           this.postService.updatePost(id, this.p).subscribe(
             (res) => {
               this.starts[i] = numero;
@@ -185,32 +181,19 @@ export class HomePage implements OnInit {
 
   addFav(post) {
     const usu = JSON.parse(localStorage.getItem('token'));
-    this.usuario = usu;
-    this.user = this.usuario.user;
-    this.getAccountById(this.user.id)
-    //if (post.user.id != this.user.id) {
-    this.accountService.getFav().subscribe(
-      (res) => {
-        this.guardados = res
-
-        this.guardados.push(post);
-
-        let result = this.guardados.filter((item, index) => {
-          return this.guardados.indexOf(item) === index;
-        })
-
-        this.user.guardado = [...result];
-        //this.user.guardado = this.guardados;
-
-        this.accountService.updateAccount(this.user.id, this.user).subscribe(
-          (res) => {
-            this.saveToast();
-          },
-          (err) => {
-            console.log(err)
-          }
-        );
+    var pub: any = {
+      "data": {
+        "users": [
+        ]
+      }
+    }
+    this.getAccountById()
+    pub.data.users.push(this.user.id)
+    this.postService.updatePost(post.id, pub).subscribe((res) => {
+      console.log(res)
+    },
+      (err) => {
+        console.log(err)
       })
-    //}
   }
 }

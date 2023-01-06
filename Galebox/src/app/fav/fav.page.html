@@ -21,23 +21,23 @@
           <ion-col *ngFor="let post of guardados" size="12" size-md="4">
             <ion-card>
               <ion-card-header>
-                <ion-card-title style="margin-top: 3vh;">{{post.titulo}}</ion-card-title>
+                <ion-card-title style="margin-top: 3vh;">{{post.attributes.titulo}}</ion-card-title>
                 <ion-row>
                   <ion-col size="11" size-md="11">
                     <ion-chip>
-                      <ion-label>{{post.categoria}}</ion-label>
+                      <ion-label>{{post.attributes.categoria}}</ion-label>
                     </ion-chip>
                   </ion-col>
                   <ion-col size="1" size-md="1">
                     <ion-label>
-                      <ion-icon name="bookmark" slot="end" class="guardar" (click)="removefav(post.id)"></ion-icon>
+                      <ion-icon name="bookmark" slot="end" class="guardar" (click)="removefav(post)"></ion-icon>
                     </ion-label>
                   </ion-col>
                 </ion-row>
               </ion-card-header>
-              <img src={{post.imagen}} style="cursor: pointer;">
+              <img src={{post.attributes.imagen}} style="cursor: pointer;">
               <ion-card-content> 
-                <ion-label>{{post.descripcion}}</ion-label> 
+                <ion-label>{{post.attributes.descripcion}}</ion-label> 
               </ion-card-content>
             </ion-card>
           </ion-col>

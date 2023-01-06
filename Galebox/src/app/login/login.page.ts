@@ -11,9 +11,8 @@ import { ToastController } from '@ionic/angular';
 
 export class LoginPage implements OnInit {
 
-  usuario:any = {
-    "jwt": "string",
-    "user": {}
+  private usuario:any = {
+    "data": "",
   }
 
   constructor(
@@ -38,7 +37,7 @@ export class LoginPage implements OnInit {
         this.accountService.login(username.value, password.value).subscribe(
           (res) => {
           this.usuario = res;
-          this.usuario = localStorage.setItem('token',JSON.stringify(res));
+          this.usuario = localStorage.setItem('token',JSON.stringify({data: this.usuario.jwt}));
           //this.router.navigate(['/home'])
           window.location.assign('/');
         },

@@ -44,7 +44,7 @@
               <ion-label position="floating" color="medium" >Añadir Imagen:</ion-label>
               <br/>
               <input (change)="captureFile($event)" type="file" #imagen>
-              <div *ngIf="previsualizacion && !editing">
+              <div *ngIf="previsualizacion">
                 <img [src]="previsualizacion">
               </div>
               <div *ngIf="editing">
@@ -55,7 +55,7 @@
               <ion-label position="floating" color="medium" >Añadir descripción:</ion-label>
               <ion-input #descripcion></ion-input>
             </ion-item>
-            <ion-button color= "warning" style="margin-top: 4vh;" [disabled]="loading" (click) = "editing ? updatePost(p.id, titulo, descripcion, imagen, categoria) : guardarPost(titulo, descripcion, categoria)">{{(loading) ? 'Cargando...' : 'Guardar' }}</ion-button>
+            <ion-button color= "warning" style="margin-top: 4vh;" [disabled]="loading" (click) = "editing ? updatePost(p.data.id, titulo, descripcion, imagen, categoria) : guardarPost(titulo, descripcion, categoria)">{{(loading) ? 'Cargando...' : 'Guardar' }}</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>

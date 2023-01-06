@@ -3,20 +3,20 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } fro
 import { Subject, Observable } from 'rxjs';
 
 
-import { AccountService } from '../account.service';
+import { PostService } from '../post.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModifyPostGuard implements CanActivate {
-  constructor(private accountService: AccountService) {
+  constructor(private postService: PostService) {
   }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     var subject = new Subject<boolean>();
     var out: boolean
-    this.accountService.verifyModifyPost(route.params).subscribe((res) => {
+    this.postService.verifyModifyPost(route.params).subscribe((res) => {
       out = res
       subject.next(out)
     })

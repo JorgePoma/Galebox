@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { AccountService } from '../services/account.service';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-fav',
@@ -9,7 +10,7 @@ import { AccountService } from '../services/account.service';
 })
 export class FavPage implements OnInit {
 
-  guardados: any = []
+  guardados: any;
   isSave: boolean;
   noSave: boolean;
   usuario: any = {
@@ -23,20 +24,26 @@ export class FavPage implements OnInit {
 
   }
   user: any = {
-    "id": "string",
-    "username": "string",
-    "email": "string",
-    "guardado": []
+    "id": "",
+    "username": "",
+    "email": ""
   }
+
   constructor(
     private accountService: AccountService,
+    private postService: PostService,
     public toastController: ToastController
-  ) { }
+  ) { 
+    this.guardados = []
+  }
 
   ngOnInit() {
   }
   ionViewWillEnter() {
-    this.loadFav();
+    const usu = JSON.parse(localStorage.getItem('token'));
+    if (usu != null) {
+      this.getAccountById()
+    }
   }
 
   async presentToast() {
@@ -55,40 +62,46 @@ export class FavPage implements OnInit {
     toast.present();
   }
 
-  loadFav() {
-
-    this.accountService.getFav().subscribe(
+  getAccountById() {
+    this.accountService.getAccount().subscribe(
       (res) => {
-        this.guardados = res
+        this.user = res
+        console.log(this.user)
+        this.loadFav();
+      },
+      (err) => console.log('err Usu', err)
+    )
+  }
+
+  loadFav() {
+    this.accountService.getFav(this.user.id).subscribe(
+      (res) => {
+        let aux : any = {"data":[]}
+        aux = res
+        this.guardados = [...aux.data]
+        console.log(this.guardados)
         if (this.guardados.length == 0) {
           this.presentToast();
         }
       })
   }
-  removefav(id) {
-    this.isSave = false;
-    this.noSave = true;
-    const usu = JSON.parse(localStorage.getItem('token'));
-    this.user = usu.user;
-    this.accountService.getAccountById(this.user.id).subscribe(
-      (res) => {
-        this.user = res
-
-        const aux = this.user.guardado.filter(post => post.id != id)
-
-        this.user.guardado = [...aux];
-        this.accountService.updateAccount(this.user.id, this.user).subscribe(
-          (res) => {
-            this.deleteToast();
-          },
-          (err) => {
-            console.log('err2', err)
-          }
-        );
-      },
-      (err) => {
-        console.log('err Usu', err)
+  removefav(post) {
+    let u = []
+    var pub: any = {
+      "data": {
+        "users": [
+        ]
       }
-    )
+    }
+    console.log(post)
+    this.getAccountById()
+    let aux = pub.data.users.filter(u => u != post.id)
+    pub.data.users = [...aux]
+    this.postService.updatePost(post.id, pub).subscribe((res) => {
+      console.log(res)
+    },
+      (err) => {
+        console.log(err)
+      })
   }
 }

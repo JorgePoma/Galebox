@@ -19,11 +19,17 @@ export class PostFormPage implements OnInit {
   public loading: boolean;
 
   p: any = {
-    "titulo": "",
-    "descripcion": "",
-    "imagen": "",
-    "categoria": "",
-    "estrellas": 0
+    "data":{
+      "id":"",
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "",
+      "categoria": "",
+      "estrellas": 0
+    }
+  }
+  res: any = {
+    "data":{}
   }
 
   constructor(
@@ -43,6 +49,7 @@ export class PostFormPage implements OnInit {
         this.postServices.getPostById(paramMap.get('postid')).subscribe(
           (res) => {
             this.p = res;
+            console.log(this.p)
           });
       }
     });
@@ -76,7 +83,9 @@ export class PostFormPage implements OnInit {
     }
   })
   guardarPost(titulo, descripcion, categoria) {
+    var users = []
     //save image
+    var imag:any
     this.loading = true;
     const file_data = this.archivos[0];
     const data = new FormData();
@@ -86,16 +95,19 @@ export class PostFormPage implements OnInit {
     this.uploadService.uploadImage(data).subscribe(
       (res) => {
         if (res) {
-          ;
-          const user = JSON.parse(localStorage.getItem('token'))
-          this.postServices.createPost(titulo.value, descripcion.value, res.secure_url, categoria.value, user.user).subscribe(
-            (res) => {
-              this.loading = false;
-              ;
-              this.router.navigate(['/home'])
-            },
-            (err) => console.error('error1', err)
-          );
+          imag = res
+          this.accountService.getAccount().subscribe((res) => {
+            this.res = res
+            console.log(this.res)
+            this.postServices.createPost(titulo.value, descripcion.value, imag.secure_url, categoria.value, this.res.id, users).subscribe(
+              (res) => {
+                this.loading = false;
+                console.log(res)
+                this.router.navigate(['/home'])
+              },
+              (err) => console.error('error1', err)
+            );
+          }, (err) => { })
         }
       },
       (err) => {
@@ -106,19 +118,22 @@ export class PostFormPage implements OnInit {
   }
   updatePost(id, titulo, descripcion, imagen, categoria) {
     this.loading = true;
+    var img_url:any;
+    var send: any = {data:{}}
     this.postServices.getPostById(id).subscribe(
       (res) => {
         this.p = res
-
         if (titulo.value != "") {
-          this.p.titulo = titulo.value;
+          send.data.titulo = titulo.value;
+        }
+        if (categoria.value != undefined) {
+          send.data.categoria = categoria.value;
         }
         if (descripcion.value != "") {
-          this.p.descripcion = descripcion.value;
+          send.data.descripcion = descripcion.value;
         }
         if (imagen.value != "") {
           const file_data = this.archivos[0];
-          let img_url = "";
           const data = new FormData();
           data.append('file', file_data);
           data.append('upload_preset', 'galebox');
@@ -126,28 +141,23 @@ export class PostFormPage implements OnInit {
           this.uploadService.uploadImage(data).subscribe(
             (res) => {
               if (res) {
-                ;
-                img_url = res.secure_url;
-
+                img_url = res;
               }
+              send.data.imagen = img_url.secure_url;
+              console.log(send)
+              this.postServices.updatePost(id, send).subscribe(
+                (res) => {
+                  console.log(res)
+                  this.loading = false;
+                  this.router.navigate(['/home']);
+                },
+                (err) => {
+                  console.log(err)
+                  this.loading = false;
+                }
+              );
             });
-          this.p.imagen = img_url;
         }
-        if (categoria.value != "") {
-          this.p.categoria = categoria.value;
-        }
-        this.postServices.updatePost(id, this.p).subscribe(
-          (res) => {
-            ;
-            this.loading = false;
-            this.router.navigate(['/home']);
-          },
-          (err) => {
-            console.log(err)
-            this.loading = false;
-          }
-
-        );
       },
       (err) => {
         console.log(err)

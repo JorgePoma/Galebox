@@ -84,10 +84,9 @@ export class AccountPage implements OnInit {
   })
 
   getCurrentAccount(){
-    const usu = JSON.parse(localStorage.getItem('token'));
-    this.u = usu.user
-    this.accountService.getAccountById(this.u.id).subscribe(
+    this.accountService.getAccount().subscribe(
       (res)=>{
+        console.log(res)
         this.u = res
       },
       (err)=>console.log('err Usu',err)

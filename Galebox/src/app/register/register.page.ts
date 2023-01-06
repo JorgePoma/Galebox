@@ -66,10 +66,8 @@ export class RegisterPage implements OnInit {
       this.uploadService.uploadImage(data).subscribe(
         (res) => {
           if(res){
-            ;
             this.accountService.createAccount(username.value, email.value, password.value, this.role, res.secure_url).subscribe(
               (res) => {
-                ;
                 this.router.navigate(['/login'])
               }, 
               (err) => console.error(err)

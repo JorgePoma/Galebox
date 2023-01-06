@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from "../services/post.service";
+import { AccountService } from "../services/account.service";
 import { AlertController, ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from "@angular/router";
 
@@ -14,15 +15,20 @@ export class SavedPage implements OnInit {
   res: any = {
     "data":[]
   }
+  user: any = {
+    "id": "",
+    "username": "",
+    "email": ""
+  }
 
   constructor(
     private postService: PostService,
+    private accountService: AccountService,
     private alertControler: AlertController,
     public toastController: ToastController
   ) { }
 
   ngOnInit() {
-    
   }
   async presentToast() {
     const toast = await this.toastController.create({
@@ -34,11 +40,11 @@ export class SavedPage implements OnInit {
 
   loadMyPost(){
     
-    const user = JSON.parse(localStorage.getItem('token'))
-    this.postService.getMyPost(user.user.id).subscribe(
+    this.postService.getMyPost(this.user.id).subscribe(
       (res) => {
         this.res = res
         this.posts = this.res.data
+        console.log(this.posts)
         if(this.posts.length == 0){
           this.presentToast();
         }
@@ -48,10 +54,23 @@ export class SavedPage implements OnInit {
       
   }
   ionViewWillEnter(){
-    this.loadMyPost();
+    const usu = JSON.parse(localStorage.getItem('token'));
+    if (usu != null) {
+      this.getAccountById()
+    }
+    
   }
 
-  
+  getAccountById() {
+    this.accountService.getAccount().subscribe(
+      (res) => {
+        this.user = res
+        console.log(this.user)
+        this.loadMyPost();
+      },
+      (err) => console.log('err Usu', err)
+    )
+  }
 
   async deletePost(id) {
     const alert = await this.alertControler.create({
