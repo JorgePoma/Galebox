@@ -66,10 +66,11 @@ export class FavPage implements OnInit {
     this.accountService.getAccount().subscribe(
       (res) => {
         this.user = res
-        console.log(this.user)
         this.loadFav();
       },
-      (err) => console.log('err Usu', err)
+      (err) => {
+        //console.log('err Usu', err)
+      }
     )
   }
 
@@ -79,7 +80,6 @@ export class FavPage implements OnInit {
         let aux : any = {"data":[]}
         aux = res
         this.guardados = [...aux.data]
-        console.log(this.guardados)
         if (this.guardados.length == 0) {
           this.presentToast();
         }
@@ -93,15 +93,13 @@ export class FavPage implements OnInit {
         ]
       }
     }
-    console.log(post)
     this.getAccountById()
     let aux = pub.data.users.filter(u => u != post.id)
     pub.data.users = [...aux]
     this.postService.updatePost(post.id, pub).subscribe((res) => {
-      console.log(res)
     },
       (err) => {
-        console.log(err)
+        //console.log(err)
       })
   }
 }

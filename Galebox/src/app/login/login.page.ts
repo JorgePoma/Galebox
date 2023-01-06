@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from "../services/account.service";
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
           //this.router.navigate(['/home'])
           window.location.assign('/');
         },
-          (err) => {console.log(err);
+          (err) => {//console.log(err);
           this.presentToast();}
         );
       }else{

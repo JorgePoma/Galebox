@@ -73,7 +73,6 @@ export class PostService {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.data;
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
-    console.log(headers)
     return this.http.post('https://backend-qc57.onrender.com/api/publications',{
       'data':{titulo, descripcion,imagen, categoria,'estrellas':0, 'user': user, 'users': users}
     },{ headers }
@@ -113,11 +112,11 @@ export class PostService {
           }
         },
         (err) => {
-          console.log(err)
+          //console.log(err)
         })
     },
     (err)=>{
-      console.log(err)
+      //console.log(err)
     })
     return subject.asObservable()
   }

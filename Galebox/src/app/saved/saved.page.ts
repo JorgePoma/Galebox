@@ -44,12 +44,13 @@ export class SavedPage implements OnInit {
       (res) => {
         this.res = res
         this.posts = this.res.data
-        console.log(this.posts)
         if(this.posts.length == 0){
           this.presentToast();
         }
       }, 
-      (err) => console.log(err)
+      (err) => {
+        //console.log(err)
+      }
       );
       
   }
@@ -65,10 +66,11 @@ export class SavedPage implements OnInit {
     this.accountService.getAccount().subscribe(
       (res) => {
         this.user = res
-        console.log(this.user)
         this.loadMyPost();
       },
-      (err) => console.log('err Usu', err)
+      (err) => {
+        //console.log('err Usu', err)
+      }
     )
   }
 
@@ -84,7 +86,9 @@ export class SavedPage implements OnInit {
           (res) => {
             this.loadMyPost();
           },
-          (err) => console.log(err)
+          (err) => {
+            //console.log(err)
+          }
           );
         },
       }, 

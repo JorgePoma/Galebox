@@ -43,9 +43,9 @@ export class AccountService {
     return this.http.get('https://backend-qc57.onrender.com/api/users/' + id,{ headers })
   }
 
-  createAccount(username: string, email: string, password: string, role: string, imagen: string) {
+  createAccount(username: string, email: string, password: string, imagen: string) {
     return this.http.post('https://backend-qc57.onrender.com/api/auth/local/register', {
-      username, email, password, role, imagen
+      username, email, password, imagen
     })
   }
 
@@ -76,7 +76,6 @@ export class AccountService {
     var subject = new Subject<boolean>();
     this.getAccount().subscribe((res)=>{
       user = res
-      console.log({"user1":parseInt(id.userid),"user2":user.id})
       if (parseInt(id.userid) === user.id) {
         out = true
         subject.next(out)

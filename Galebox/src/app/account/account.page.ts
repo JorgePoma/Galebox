@@ -1,7 +1,6 @@
-import { unsupported } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AccountService } from "../services/account.service";
 import { PostService } from '../services/post.service';
 import { UploadService } from '../services/upload.service';
@@ -86,10 +85,11 @@ export class AccountPage implements OnInit {
   getCurrentAccount(){
     this.accountService.getAccount().subscribe(
       (res)=>{
-        console.log(res)
         this.u = res
       },
-      (err)=>console.log('err Usu',err)
+      (err)=>{
+        //console.log('err Usu',err)
+      }
     )
   }
 
@@ -121,16 +121,19 @@ export class AccountPage implements OnInit {
                 (res) => {
                   this.loading=false;
                 },
-                (err) => {console.log('err1',err)
+                (err) => {//console.log('err1',err)
                 this.loading=false;}
               );
             },
-            (err) => {console.log('err2',err)
+            (err) => {
+              //console.log('err2',err)
             this.loading=false;}
             );
           }
         },
-        (err)=>console.log('err3',err)
+        (err)=>{
+          //console.log('err3',err)
+        }
         )
       }
     }

@@ -3,18 +3,18 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AccountService } from "../services/account.service";
 import { UploadService } from '../services/upload.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
-  providers: [ UploadService ]
+  providers: [UploadService]
 })
 export class RegisterPage implements OnInit {
   public previsualizacion: string;
-  public archivos:any = []
-  role: string = "Authorized"
-  u:any = { 
+  public archivos: any
+  u: any = {
     "publications": [
       "string"
     ]
@@ -24,19 +24,27 @@ export class RegisterPage implements OnInit {
     private accountService: AccountService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private uploadService:UploadService
+    private uploadService: UploadService,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
   }
-  captureFile(event):any{
-    const archivo = event.target.files[0]
-    this.extraerBase64(archivo).then((imagen:any) =>{
-    this.previsualizacion= imagen.base;
+  async errorToast() {
+    const toast = await this.toastController.create({
+      message: 'datos invalidos',
+      duration: 1000
     });
-    this.archivos.push(archivo)
+    toast.present();
   }
-  extraerBase64 = async($event: any) => new Promise((resolve, reject) =>{
+  captureFile(event): any {
+    const archivo = event.target.files[0]
+    this.extraerBase64(archivo).then((imagen: any) => {
+      this.previsualizacion = imagen.base;
+    });
+    this.archivos = archivo
+  }
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
     try {
       const unsafeimg = window.URL.createObjectURL($event);
       const image = this.sanitizer.bypassSecurityTrustUrl(unsafeimg);
@@ -57,26 +65,28 @@ export class RegisterPage implements OnInit {
     }
   })
 
-  guardarCuenta(username, email, password){
-    const file_data = this.archivos[0];
-      const data = new FormData();
-      data.append('file', file_data);
-      data.append('upload_preset', 'galebox');
-      data.append('cloud_name', 'cuarteto-dinamico')
-      this.uploadService.uploadImage(data).subscribe(
-        (res) => {
-          if(res){
-            this.accountService.createAccount(username.value, email.value, password.value, this.role, res.secure_url).subscribe(
-              (res) => {
-                this.router.navigate(['/login'])
-              }, 
-              (err) => console.error(err)
-            );
+  guardarCuenta(username, email, password) {
+    const file_data = this.archivos;
+    const data = new FormData();
+    data.append('file', file_data);
+    data.append('upload_preset', 'galebox');
+    data.append('cloud_name', 'cuarteto-dinamico')
+    this.uploadService.uploadImage(data).subscribe(
+      (res) => {
+        this.accountService.createAccount(username.value, email.value, password.value, res.secure_url).subscribe(
+          (res) => {
+            this.router.navigate(['/login'])
+          },
+          (err) => {
+            this.errorToast()
+            console.error(err)
           }
-        },
-        (err) =>{
-          console.log(err);
-        }
-      )
+        );
+
+      },
+      (err) => {
+        //console.log(err);
+      }
+    )
   }
 }

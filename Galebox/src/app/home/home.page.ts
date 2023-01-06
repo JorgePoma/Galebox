@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from "../services/post.service";
 import { AccountService } from "../services/account.service";
-import { Router } from '@angular/router';
 import { MenuController, ToastController } from '@ionic/angular';
-import { isPlatformServer } from '@angular/common';
-import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-home',
@@ -88,15 +85,14 @@ export class HomePage implements OnInit {
       (res) => {
         this.res = res
         this.posts = this.res.data
-        console.log(this.res)
-        console.log(this.posts)
-        console.log(this.posts[0].attributes.user)
         this.posts.map(po => this.starts.push(po.attributes.estrellas));
 
         this.results = this.posts.map(e => e.categoria);
         this.aux = [...this.posts];
       },
-      (err) => console.log(err)
+      (err) => {
+        //console.log(err)
+      }
     );
   }
   //buscador
@@ -121,7 +117,8 @@ export class HomePage implements OnInit {
       (res) => {
         this.accounts = res
       },
-      (err) => console.log(err)
+      (err) => {//console.log(err)
+      }
     );
   }
 
@@ -135,8 +132,10 @@ export class HomePage implements OnInit {
     this.accountService.getAccount().subscribe(
       (res) => {
         this.user = res
+        this.loadPost()
       },
-      (err) => console.log('err Usu', err)
+      (err) => {//console.log('err Usu', err)
+      }
     )
   }
 
@@ -149,19 +148,17 @@ export class HomePage implements OnInit {
     try {
       this.postService.getPostById(id).subscribe(
         (res) => {
-          //this.p = this.getValues(res)
-          //console.log(this.p)
           this.p.data.estrellas = numero;
           this.postService.updatePost(id, this.p).subscribe(
             (res) => {
               this.starts[i] = numero;
-              //this.loadPost();
-
             },
-            (err) => console.log(err)
+            (err) => {//console.log(err)
+            }
           );
         },
-        (err) => console.log(err)
+        (err) => {//console.log(err)
+        }
       );
     } catch (error) {
       window.location.assign('${process.env.URL_BASE}/login');
@@ -190,10 +187,10 @@ export class HomePage implements OnInit {
     this.getAccountById()
     pub.data.users.push(this.user.id)
     this.postService.updatePost(post.id, pub).subscribe((res) => {
-      console.log(res)
     },
       (err) => {
-        console.log(err)
+        {//console.log(err)
+        }
       })
   }
 }

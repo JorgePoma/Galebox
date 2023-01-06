@@ -49,7 +49,6 @@ export class PostFormPage implements OnInit {
         this.postServices.getPostById(paramMap.get('postid')).subscribe(
           (res) => {
             this.p = res;
-            console.log(this.p)
           });
       }
     });
@@ -98,11 +97,9 @@ export class PostFormPage implements OnInit {
           imag = res
           this.accountService.getAccount().subscribe((res) => {
             this.res = res
-            console.log(this.res)
             this.postServices.createPost(titulo.value, descripcion.value, imag.secure_url, categoria.value, this.res.id, users).subscribe(
               (res) => {
                 this.loading = false;
-                console.log(res)
                 this.router.navigate(['/home'])
               },
               (err) => console.error('error1', err)
@@ -111,7 +108,7 @@ export class PostFormPage implements OnInit {
         }
       },
       (err) => {
-        console.log('error2', err);
+        //console.log('error2', err);
         this.loading = false;
       }
     )
@@ -144,15 +141,13 @@ export class PostFormPage implements OnInit {
                 img_url = res;
               }
               send.data.imagen = img_url.secure_url;
-              console.log(send)
               this.postServices.updatePost(id, send).subscribe(
                 (res) => {
-                  console.log(res)
                   this.loading = false;
                   this.router.navigate(['/home']);
                 },
                 (err) => {
-                  console.log(err)
+                  //console.log(err)
                   this.loading = false;
                 }
               );
@@ -160,7 +155,7 @@ export class PostFormPage implements OnInit {
         }
       },
       (err) => {
-        console.log(err)
+        //console.log(err)
         this.loading = false;
       }
     );
