@@ -108,7 +108,7 @@ export class PostFormPage implements OnInit {
         }
       },
       (err) => {
-        console.log('error2', err);
+        //console.log('error2', err);
         this.loading = false;
       }
     )
@@ -147,7 +147,7 @@ export class PostFormPage implements OnInit {
                   this.router.navigate(['/home']);
                 },
                 (err) => {
-                  console.log(err)
+                  //console.log(err)
                   this.loading = false;
                 }
               );
@@ -155,7 +155,7 @@ export class PostFormPage implements OnInit {
         }
       },
       (err) => {
-        console.log(err)
+        //console.log(err)
         this.loading = false;
       }
     );

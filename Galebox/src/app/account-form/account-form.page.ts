@@ -107,7 +107,7 @@ export class AccountFormPage implements OnInit {
         this.router.navigate(['/home']);
       },
       (err) => {
-        console.log(err)
+        //console.log(err)
         this.loading = false;
       }
     );

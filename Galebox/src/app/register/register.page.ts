@@ -85,7 +85,7 @@ export class RegisterPage implements OnInit {
 
       },
       (err) => {
-        console.log(err);
+        //console.log(err);
       }
     )
   }
