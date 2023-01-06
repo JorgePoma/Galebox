@@ -49,7 +49,7 @@ export class SavedPage implements OnInit {
         }
       }, 
       (err) => {
-        //console.log(err)
+        console.log(err)
       }
       );
       
@@ -69,7 +69,7 @@ export class SavedPage implements OnInit {
         this.loadMyPost();
       },
       (err) => {
-        //console.log('err Usu', err)
+        console.log('err Usu', err)
       }
     )
   }
@@ -87,7 +87,7 @@ export class SavedPage implements OnInit {
             this.loadMyPost();
           },
           (err) => {
-            //console.log(err)
+            console.log(err)
           }
           );
         },

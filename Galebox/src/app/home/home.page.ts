@@ -91,7 +91,7 @@ export class HomePage implements OnInit {
         this.aux = [...this.posts];
       },
       (err) => {
-        //console.log(err)
+        console.log(err)
       }
     );
   }
@@ -117,7 +117,7 @@ export class HomePage implements OnInit {
       (res) => {
         this.accounts = res
       },
-      (err) => {//console.log(err)
+      (err) => {console.log(err)
       }
     );
   }
@@ -134,7 +134,7 @@ export class HomePage implements OnInit {
         this.user = res
         this.loadPost()
       },
-      (err) => {//console.log('err Usu', err)
+      (err) => {console.log('err Usu', err)
       }
     )
   }
@@ -153,11 +153,11 @@ export class HomePage implements OnInit {
             (res) => {
               this.starts[i] = numero;
             },
-            (err) => {//console.log(err)
+            (err) => {console.log(err)
             }
           );
         },
-        (err) => {//console.log(err)
+        (err) => {console.log(err)
         }
       );
     } catch (error) {
@@ -189,7 +189,7 @@ export class HomePage implements OnInit {
     this.postService.updatePost(post.id, pub).subscribe((res) => {
     },
       (err) => {
-        {//console.log(err)
+        {console.log(err)
         }
       })
   }

@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
           //this.router.navigate(['/home'])
           window.location.assign('/');
         },
-          (err) => {//console.log(err);
+          (err) => {console.log(err);
           this.presentToast();}
         );
       }else{

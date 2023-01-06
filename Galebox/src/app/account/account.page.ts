@@ -88,7 +88,7 @@ export class AccountPage implements OnInit {
         this.u = res
       },
       (err)=>{
-        //console.log('err Usu',err)
+        console.log('err Usu',err)
       }
     )
   }
@@ -121,18 +121,18 @@ export class AccountPage implements OnInit {
                 (res) => {
                   this.loading=false;
                 },
-                (err) => {//console.log('err1',err)
+                (err) => {console.log('err1',err)
                 this.loading=false;}
               );
             },
             (err) => {
-              //console.log('err2',err)
+              console.log('err2',err)
             this.loading=false;}
             );
           }
         },
         (err)=>{
-          //console.log('err3',err)
+          console.log('err3',err)
         }
         )
       }

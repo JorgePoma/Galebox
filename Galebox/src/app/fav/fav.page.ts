@@ -69,7 +69,7 @@ export class FavPage implements OnInit {
         this.loadFav();
       },
       (err) => {
-        //console.log('err Usu', err)
+        console.log('err Usu', err)
       }
     )
   }
@@ -99,7 +99,7 @@ export class FavPage implements OnInit {
     this.postService.updatePost(post.id, pub).subscribe((res) => {
     },
       (err) => {
-        //console.log(err)
+        console.log(err)
       })
   }
 }
