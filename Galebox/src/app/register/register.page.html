@@ -21,11 +21,11 @@
           <ion-card-content class="carta">
             <ion-item counter="true">
               <ion-label position="floating" color="medium">Nombre de usuario:</ion-label>
-              <ion-input #username maxlength="20" required="true"></ion-input>
+              <ion-input #username maxlength="50" required="true"></ion-input>
             </ion-item>
             <ion-item counter="true">
               <ion-label position="floating" color="medium">Correo:</ion-label>
-              <ion-input type="email" required="true" maxlength="20" minlength="8" #email ngModel email></ion-input>
+              <ion-input type="email" required="true" maxlength="150" minlength="8" #email ngModel email></ion-input>
               <ion-note slot="helper">Enter a valid email</ion-note>
               <ion-note slot="error">Invalid email</ion-note>
             </ion-item>
