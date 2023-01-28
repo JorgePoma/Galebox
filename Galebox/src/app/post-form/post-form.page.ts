@@ -144,7 +144,7 @@ export class PostFormPage implements OnInit {
               this.postServices.updatePost(id, send).subscribe(
                 (res) => {
                   this.loading = false;
-                  this.router.navigate(['/home']);
+                  this.router.navigate(['/']);
                 },
                 (err) => {
                   //console.log(err)

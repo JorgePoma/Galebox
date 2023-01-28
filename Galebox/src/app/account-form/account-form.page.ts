@@ -104,7 +104,7 @@ export class AccountFormPage implements OnInit {
     this.accountService.updateAccount(id, this.user).subscribe(
       (res) => {
         this.loading = false;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       (err) => {
         //console.log(err)
