@@ -161,7 +161,7 @@ export class HomePage implements OnInit {
         }
       );
     } catch (error) {
-      window.location.assign('${process.env.URL_BASE}/login');
+      alert('Error en calificación')
     }
 
   }

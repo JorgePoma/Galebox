@@ -5,11 +5,7 @@ import { ModifyPostGuard } from './services/user-guards/modify-post.guard';
 import { ModifyUserGuard } from './services/user-guards/modify-user.guard';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
+ 
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
@@ -49,9 +45,15 @@ const routes: Routes = [
   {
     path: 'account-form',
     loadChildren: () => import('./account-form/account-form.module').then( m => m.AccountFormPageModule),canActivate:[AuthGuard], pathMatch: 'full',
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  { path: '**',
+   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule) 
   }
-
-
 ];
 
 @NgModule({
