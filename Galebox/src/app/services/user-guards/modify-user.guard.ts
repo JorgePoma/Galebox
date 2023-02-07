@@ -16,7 +16,7 @@ export class ModifyUserGuard implements CanActivate {
     var out: boolean
     this.accountService.verifyModifyUser(route.params).subscribe((res) => {
       out = res
-      subject.next(out)
+      out == false ? this.router.navigateByUrl('/'): subject.next(out);
     })
     return subject.asObservable()
   }
