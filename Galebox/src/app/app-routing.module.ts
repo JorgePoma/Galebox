@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './services/user-guards/auth.guard';
 import { ModifyPostGuard } from './services/user-guards/modify-post.guard';
 import { ModifyUserGuard } from './services/user-guards/modify-user.guard';
+import { HomePageModule } from './home/home.module';
 
 const routes: Routes = [
  
@@ -52,7 +53,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: '**',
-   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule) 
+   component: HomePageModule
   }
 ];
 
