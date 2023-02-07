@@ -161,7 +161,7 @@ export class HomePage implements OnInit {
         }
       );
     } catch (error) {
-      alert('Error en calificación')
+      window.location.assign('/');
     }
 
   }
