@@ -104,7 +104,7 @@ export class HomePage implements OnInit {
       this.posts = []
       this.aux.map(
         d => {
-          if (d.categoria.toLowerCase().indexOf(query) > -1) {
+          if (d.attributes.categoria.toLowerCase().indexOf(query) > -1) {
             this.posts.push(d);
           }
         }
