@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PostService } from "../services/post.service";
 import { UploadService } from "../services/upload.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AccountService } from '../services/account.service';
+import { UtilsService } from '../services/utils.service'
 
 
 @Component({
@@ -32,7 +32,7 @@ export class AccountFormPage implements OnInit {
   }
   constructor(
     private sanitizer: DomSanitizer,
-    private postServices: PostService,
+    private utils: UtilsService,
     private accountService: AccountService,
     private router: Router,
     private activateRoute: ActivatedRoute,
@@ -81,10 +81,10 @@ export class AccountFormPage implements OnInit {
   updateAccount(id, username, email, imagen) {
     this.loading = true;
     if (username.value != "") {
-      this.user.username = username.value;
+      this.user.username = this.utils.escapeHtml(username.value);
     }
     if (email.value != "") {
-      this.user.username = username.value;
+      this.user.username = this.utils.escapeHtml(username.value);
     }
     if (imagen.value != "") {
       const file_data = this.archivos[0];

@@ -7,8 +7,8 @@ export interface User {
   "data": {
     "id": "string",
     "attributes": {
-      "username": "string",
-      "email": "user@example.com",
+      "username": string,
+      "email": string,
       "role": {},
       "publications": {},
       "imagen": "string",
@@ -55,12 +55,9 @@ export class AccountService {
     })
   }
 
-  updateAccount(id: any, _user: User) {
+  updateAccount(id: any, user: User) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.data;
-    const user = structuredClone(_user)
-    user.data.attributes.username = this.utils.escapeHtml(_user.data.attributes.username)
-    user.data.attributes.email = this.utils.escapeHtml(_user.data.attributes.email)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.put('https://backend-qc57.onrender.com/api/users/' + id,
       user,{ headers })

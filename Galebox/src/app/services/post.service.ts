@@ -9,10 +9,10 @@ export interface Post {
   "data": {
     "id": "string",
     "attributes": {
-      "titulo": "string",
-      "descripcion": "string",
+      "titulo": string,
+      "descripcion": string,
       "imagen": "string",
-      "categoria": "deporte",
+      "categoria": string,
       "estrellas": 0,
       "user": {
         "data": {
@@ -92,13 +92,9 @@ export class PostService {
     return this.http.delete('https://backend-qc57.onrender.com/api/publications/'+id,{ headers })
   }
 
-  updatePost(id:string, _post:Post){
+  updatePost(id:string, post:Post){
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.data;
-    const post = structuredClone(_post)
-    post.data.attributes.titulo = this.utils.escapeHtml(_post.data.attributes.titulo)
-    post.data.attributes.descripcion = this.utils.escapeHtml(_post.data.attributes.descripcion)
-    post.data.attributes.categoria = this.utils.escapeHtml(_post.data.attributes.categoria)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.put('https://backend-qc57.onrender.com/api/publications/'+id,
       post,{ headers }

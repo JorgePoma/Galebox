@@ -4,6 +4,7 @@ import { PostService } from "../services/post.service";
 import { UploadService } from "../services/upload.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AccountService } from '../services/account.service';
+import { UtilsService } from '../services/utils.service';
 
 @Component({
   selector: 'app-post-form',
@@ -38,6 +39,7 @@ export class PostFormPage implements OnInit {
     private accountService: AccountService,
     private router: Router,
     private activateRoute: ActivatedRoute,
+    private utils: UtilsService,
     private uploadService: UploadService) { }
 
 
@@ -97,7 +99,7 @@ export class PostFormPage implements OnInit {
           imag = res
           this.accountService.getAccount().subscribe((res) => {
             this.res = res
-            this.postServices.createPost(titulo.value, descripcion.value, imag.secure_url, categoria.value, this.res.id, users).subscribe(
+            this.postServices.createPost(this.utils.escapeHtml(titulo.value), this.utils.escapeHtml(descripcion.value), imag.secure_url, this.utils.escapeHtml(categoria.value), this.res.id, users).subscribe(
               (res) => {
                 this.loading = false;
                 this.router.navigate(['/home'])
