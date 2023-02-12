@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { UtilsService } from './utils.service';
 
 export interface User {
   "data": {
@@ -26,7 +27,8 @@ export class AccountService {
   account
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private utils: UtilsService
   ) { }
 
   getAccount() {
@@ -43,21 +45,30 @@ export class AccountService {
     return this.http.get('https://backend-qc57.onrender.com/api/users/' + id,{ headers })
   }
 
-  createAccount(username: string, email: string, password: string, imagen: string) {
+  createAccount(_username: string, _email: string, _password: string, _imagen: string) {
+    let username: string = this.utils.escapeHtml(_username)  
+    let email: string = this.utils.escapeHtml(_email)
+    let password: string = this.utils.escapeHtml(_password)
+    let imagen: string = this.utils.escapeHtml(_imagen)
     return this.http.post('https://backend-qc57.onrender.com/api/auth/local/register', {
       username, email, password, imagen
     })
   }
 
-  updateAccount(id: any, user: User) {
+  updateAccount(id: any, _user: User) {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.data;
+    const user = structuredClone(_user)
+    user.data.attributes.username = this.utils.escapeHtml(_user.data.attributes.username)
+    user.data.attributes.email = this.utils.escapeHtml(_user.data.attributes.email)
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
     return this.http.put('https://backend-qc57.onrender.com/api/users/' + id,
       user,{ headers })
   }
 
-  login(username: string, password: string) {
+  login(_username: string, _password: string) {
+    let username: string = this.utils.escapeHtml(_username)
+    let password: string = this.utils.escapeHtml(_password)
     return this.http.post(this.APIC, {
       "identifier": username,
       "password": password
@@ -106,7 +117,10 @@ export class AccountService {
     const usu = JSON.parse(localStorage.getItem('token'));
     const authToken = usu.data;
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
-    return this.http.get('https://backend-qc57.onrender.com/api/publications?populate=%2A&filters[users][id][$eq]='+id,{ headers })
+    
+    return this.http.get('https://backend-qc57.onrender.com/api/publications?populate=%2A&filters[users][id][$eq]='+
+      id,{ headers })
+
   }
 }
 
