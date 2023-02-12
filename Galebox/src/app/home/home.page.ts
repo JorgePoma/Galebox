@@ -78,6 +78,13 @@ export class HomePage implements OnInit {
     });
     toast.present();
   }
+  async noLoginToast() {
+    const toast = await this.toastController.create({
+      message: 'No estas logueado',
+      duration: 1000
+    });
+    toast.present();
+  }
 
   loadPost() {
     this.starts = []
@@ -133,8 +140,6 @@ export class HomePage implements OnInit {
       (res) => {
         this.user = res
         this.loadPost()
-      },
-      (err) => {//console.log('err Usu', err)
       }
     )
   }
@@ -152,16 +157,12 @@ export class HomePage implements OnInit {
           this.postService.updatePost(id, this.p).subscribe(
             (res) => {
               this.starts[i] = numero;
-            },
-            (err) => {//console.log(err)
             }
           );
-        },
-        (err) => {//console.log(err)
         }
       );
     } catch (error) {
-      window.location.assign('/login');
+      this.noLoginToast()
     }
 
   }
@@ -177,7 +178,8 @@ export class HomePage implements OnInit {
 
 
   addFav(post) {
-    const usu = JSON.parse(localStorage.getItem('token'));
+    try {
+      const usu = JSON.parse(localStorage.getItem('token'));
     var pub: any = {
       "data": {
         "users": [
@@ -187,10 +189,10 @@ export class HomePage implements OnInit {
     this.getAccountById()
     pub.data.users.push(this.user.id)
     this.postService.updatePost(post.id, pub).subscribe((res) => {
-    },
-      (err) => {
-        {//console.log(err)
-        }
-      })
+      this.saveToast()
+    })
+    } catch (error) {
+      this.noLoginToast()
+    }
   }
 }

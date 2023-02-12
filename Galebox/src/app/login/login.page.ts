@@ -44,7 +44,6 @@ export class LoginPage implements OnInit {
           (err) => {//console.log(err);
           this.presentToast();}
         );
-      }else{
       }
     }
   }
