@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from "../services/account.service";
-import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -10,14 +9,13 @@ import { ToastController } from '@ionic/angular';
 })
 
 export class LoginPage implements OnInit {
-
+  public loading: boolean;
   private usuario:any = {
     "data": "",
   }
 
   constructor(
     private accountService: AccountService,
-    private router: Router,
     public toastController: ToastController
   ) { }
 
@@ -34,15 +32,18 @@ export class LoginPage implements OnInit {
 
   login(username, password){
       if(localStorage.length == 0){
+        this.loading = true;
         this.accountService.login(username.value, password.value).subscribe(
           (res) => {
           this.usuario = res;
           this.usuario = localStorage.setItem('token',JSON.stringify({data: this.usuario.jwt}));
-          //this.router.navigate(['/home'])
+          this.loading = false;
           window.location.assign('/');
         },
-          (err) => {//console.log(err);
-          this.presentToast();}
+          (err) => {
+            this.loading = false;
+            this.presentToast();
+          }
         );
       }
     }

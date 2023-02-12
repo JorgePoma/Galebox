@@ -14,6 +14,7 @@ import { ToastController } from '@ionic/angular';
 export class RegisterPage implements OnInit {
   public previsualizacion: string;
   public archivos: any
+  public loading: boolean;
   u: any = {
     "publications": [
       "string"
@@ -66,6 +67,7 @@ export class RegisterPage implements OnInit {
   })
 
   guardarCuenta(username, email, password) {
+    this.loading = true;
     const file_data = this.archivos;
     const data = new FormData();
     data.append('file', file_data);
@@ -75,11 +77,12 @@ export class RegisterPage implements OnInit {
       (res) => {
         this.accountService.createAccount(username.value, email.value, password.value, res.secure_url).subscribe(
           (res) => {
+            this.loading = false;
             this.router.navigate(['/login'])
           },
           (err) => {
+            this.loading = false;
             this.errorToast()
-            console.error(err)
           }
         );
 

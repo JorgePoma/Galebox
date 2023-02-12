@@ -29,7 +29,7 @@
             </ion-item>
             <br>
             <div style="text-align: center;">
-              <ion-button color="warning" (click)="login(username, password)">Ingresar</ion-button>
+              <ion-button color="warning" [disabled]="loading" (click)="login(username, password)">{{(loading) ? 'Cargando...' : 'Ingresar' }}</ion-button>
             </div>
           </ion-card-content>
       </ion-card>
