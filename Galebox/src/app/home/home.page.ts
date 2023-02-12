@@ -161,7 +161,7 @@ export class HomePage implements OnInit {
         }
       );
     } catch (error) {
-      window.location.assign('/');
+      window.location.assign('/login');
     }
 
   }
